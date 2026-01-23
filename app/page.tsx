@@ -37,7 +37,7 @@ export default async function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
               <div className="p-8 bg-white dark:bg-gray-800 rounded-3xl shadow-sm hover:shadow-lg transition-shadow">
                 <div className="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-6 text-3xl text-blue-600">
-                  <Icon icon="medical-icon:i-medicines" />
+                  <Icon icon="solar:medical-kit-linear" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Medicine Available</h3>
                 <div className="text-4xl font-extrabold text-blue-600 mb-2">10k+</div>
@@ -46,7 +46,7 @@ export default async function Home() {
 
               <div className="p-8 bg-white dark:bg-gray-800 rounded-3xl shadow-sm hover:shadow-lg transition-shadow">
                 <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-6 text-3xl text-green-600">
-                  <Icon icon="mdi:truck-fast" />
+                  <Icon icon="solar:delivery-linear" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Delivery Time</h3>
                 <div className="text-4xl font-extrabold text-green-600 mb-2">24-48 hrs</div>
@@ -55,7 +55,7 @@ export default async function Home() {
 
               <div className="p-8 bg-white dark:bg-gray-800 rounded-3xl shadow-sm hover:shadow-lg transition-shadow">
                 <div className="w-16 h-16 mx-auto bg-purple-100 rounded-full flex items-center justify-center mb-6 text-3xl text-purple-600">
-                  <Icon icon="mdi:cash-remove" />
+                  <Icon icon="solar:dollar-minimalistic-linear" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Service Charge</h3>
                 <div className="text-4xl font-extrabold text-purple-600 mb-2">Free</div>
@@ -77,14 +77,14 @@ export default async function Home() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                   {[
-                    { title: "Extensive Inventory", desc: "Access a wide variety of medications including rare drugs from trusted suppliers.", icon: "fluent:box-24-filled", color: "text-blue-500 bg-blue-100" },
-                    { title: "Fast Delivery", desc: "Get your medications delivered quickly and reliably right to your doorstep.", icon: "mdi:rocket-launch", color: "text-rose-500 bg-rose-100" },
-                    { title: "Affordable Pricing", desc: "Competitive pricing with discounts on bulk orders. No hidden fees.", icon: "mdi:tag-multiple", color: "text-green-500 bg-green-100" },
-                    { title: "Certified Products", desc: "All medications undergo strict quality checks ensuring safety and efficacy.", icon: "mdi:shield-check", color: "text-amber-500 bg-amber-100" },
-                    { title: "Smart Suggestions", desc: "AI-driven recommendations based on your prescription history.", icon: "mdi:brain", color: "text-purple-500 bg-purple-100" },
-                    { title: "Easy Refills", desc: "Seamless refill process for recurring prescriptions with reminders.", icon: "mdi:refresh-circle", color: "text-cyan-500 bg-cyan-100" },
-                    { title: "Nationwide", desc: "Order from anywhere in the country with our extensive delivery network.", icon: "mdi:map-marker-radius", color: "text-indigo-500 bg-indigo-100" },
-                    { title: "Live Tracking", desc: "Track your orders in real-time with our intuitive tracking system.", icon: "mdi:map-search", color: "text-teal-500 bg-teal-100" }
+                    { title: "Extensive Inventory", desc: "Access a wide variety of medications including rare drugs from trusted suppliers.", icon: "solar:box-linear", color: "text-blue-500 bg-blue-100" },
+                    { title: "Fast Delivery", desc: "Get your medications delivered quickly and reliably right to your doorstep.", icon: "solar:rocket-linear", color: "text-rose-500 bg-rose-100" },
+                    { title: "Affordable Pricing", desc: "Competitive pricing with discounts on bulk orders. No hidden fees.", icon: "solar:tag-linear", color: "text-green-500 bg-green-100" },
+                    { title: "Certified Products", desc: "All medications undergo strict quality checks ensuring safety and efficacy.", icon: "solar:shield-check-linear", color: "text-amber-500 bg-amber-100" },
+                    { title: "Smart Suggestions", desc: "AI-driven recommendations based on your prescription history.", icon: "solar:cpu-linear", color: "text-purple-500 bg-purple-100" },
+                    { title: "Easy Refills", desc: "Seamless refill process for recurring prescriptions with reminders.", icon: "solar:restart-linear", color: "text-cyan-500 bg-cyan-100" },
+                    { title: "Nationwide", desc: "Order from anywhere in the country with our extensive delivery network.", icon: "solar:map-point-linear", color: "text-indigo-500 bg-indigo-100" },
+                    { title: "Live Tracking", desc: "Track your orders in real-time with our intuitive tracking system.", icon: "solar:map-search-linear", color: "text-teal-500 bg-teal-100" }
                   ].map((item, idx) => (
                     <div key={idx} className="flex gap-4">
                       <div className={`shrink-0 w-12 h-12 rounded-xl flex items-center justify-center ${item.color} dark:bg-opacity-20`}>

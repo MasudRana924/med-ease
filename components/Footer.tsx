@@ -11,7 +11,7 @@ export default function Footer() {
                     {/* Services */}
                     <div>
                         <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
-                            <Icon icon="mdi:stethoscope" className="text-teal-400" />
+                            <Icon icon="solar:medical-kit-linear" className="text-teal-400" />
                             Our Services
                         </h3>
                         <ul className="space-y-4">
@@ -28,7 +28,7 @@ export default function Footer() {
                     {/* Payment Options */}
                     <div>
                         <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
-                            <Icon icon="fluent:payment-24-regular" className="text-teal-400" />
+                            <Icon icon="solar:card-2-linear" className="text-teal-400" />
                             Payment Options
                         </h3>
                         <div className="flex gap-4">
@@ -39,7 +39,7 @@ export default function Footer() {
                                 <Icon icon="logos:mastercard" width="24" />
                             </div>
                             <div className="bg-white p-2 rounded w-12 h-8 flex items-center justify-center">
-                                {/* Placeholder for other payment */}
+                                <Icon icon="logos:paypal" width="20" />
                             </div>
                         </div>
                     </div>
@@ -47,14 +47,14 @@ export default function Footer() {
                     {/* Support */}
                     <div>
                         <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
-                            <Icon icon="mdi:support" className="text-teal-400" />
+                            <Icon icon="solar:help-outline-linear" className="text-teal-400" />
                             24/7 Support
                         </h3>
                         <p className="text-sm leading-relaxed mb-6">
                             Emergency medical assistance available 24/7. Our dedicated team is always ready to help.
                         </p>
                         <div className="flex items-start gap-3">
-                            <Icon icon="mdi:map-marker" className="text-teal-400 text-xl mt-1" />
+                            <Icon icon="solar:map-point-linear" className="text-teal-400 text-xl mt-1" />
                             <div>
                                 <h4 className="text-white font-semibold">Main Center</h4>
                                 <p className="text-sm text-gray-400">123 Medical Avenue</p>
@@ -65,22 +65,22 @@ export default function Footer() {
                     {/* Contact */}
                     <div>
                         <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
-                            <Icon icon="mdi:phone-in-talk" className="text-teal-400" />
+                            <Icon icon="solar:phone-calling-linear" className="text-teal-400" />
                             Contact Us
                         </h3>
                         <div className="space-y-4">
                             <Link href="tel:1-800-HealthBridge" className="flex items-center gap-3 p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
-                                <Icon icon="mdi:phone" className="text-teal-400" />
+                                <Icon icon="solar:phone-linear" className="text-teal-400" />
                                 <span className="text-sm">1-800-MedEase</span>
                             </Link>
                             <Link href="mailto:support@medease.com" className="flex items-center gap-3 p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
-                                <Icon icon="mdi:email" className="text-teal-400" />
+                                <Icon icon="solar:letter-linear" className="text-teal-400" />
                                 <span className="text-sm">support@medease.com</span>
                             </Link>
                         </div>
 
                         <div className="flex gap-4 mt-8">
-                            {["mdi:facebook", "mdi:instagram", "mdi:linkedin"].map(icon => (
+                            {["solar:facebook-linear", "solar:instagram-linear", "solar:linkedin-linear"].map(icon => (
                                 <Link key={icon} href="#" className="h-10 w-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-teal-500 hover:text-white transition-all">
                                     <Icon icon={icon} className="text-xl" />
                                 </Link>

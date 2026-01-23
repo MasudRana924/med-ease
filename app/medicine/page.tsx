@@ -65,13 +65,13 @@ function SearchableMedicineList() {
                             <div className="relative h-48 w-full rounded-xl bg-gray-50 dark:bg-gray-700 mb-4 overflow-hidden flex items-center justify-center">
                                 {/* Wishlist Button */}
                                 <button
-                                    onClick={() => addToWishlist(medicine)}
+                                    onClick={() => addToWishlist({ ...medicine, image: medicine.image.url, category: medicine.category || 'Medicine' })}
                                     className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md z-10 transition-colors ${isInWishlist(medicine._id) ? 'bg-red-50 text-red-500' : 'bg-white/80 text-gray-500 hover:text-red-500'}`}
                                 >
                                     <Icon icon={isInWishlist(medicine._id) ? "lucide:heart-crack" : "lucide:heart"} />
                                 </button>
                                 {medicine.image ? (
-                                    <img src={medicine.image} alt={medicine.name} className="h-full w-full object-contain p-4 group-hover:scale-105 transition-transform duration-300" />
+                                    <img src={medicine.image.url} alt={medicine.name} className="h-full w-full object-contain p-4 group-hover:scale-105 transition-transform duration-300" />
                                 ) : (
                                     <Icon icon="medical-icon:i-medicines" className="text-6xl text-gray-300" />
                                 )}
@@ -86,7 +86,7 @@ function SearchableMedicineList() {
                             <div className="flex items-center justify-between pt-4 mt-2 border-t border-dashed border-gray-200 dark:border-gray-700">
                                 <span className="text-xl font-bold text-gray-900 dark:text-white">${medicine.price}</span>
                                 <button
-                                    onClick={() => addToCart(medicine)}
+                                    onClick={() => addToCart({ ...medicine, image: medicine.image.url, category: medicine.category || 'Medicine' })}
                                     className="px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors flex items-center gap-2 text-sm font-medium"
                                 >
                                     <Icon icon="lucide:shopping-cart" /> Add

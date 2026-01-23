@@ -23,7 +23,7 @@ export default function NursesList({ nurses }: NursesListProps) {
                         href="/nurses"
                         className="hidden md:flex items-center gap-2 text-gray-900 dark:text-white font-semibold hover:text-rose-500 transition-colors group"
                     >
-                        View All Team <Icon icon="lucide:arrow-right" className="group-hover:translate-x-1 transition-transform" />
+                        View All Team <Icon icon="solar:arrow-right-linear" className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </div>
 
@@ -40,7 +40,7 @@ export default function NursesList({ nurses }: NursesListProps) {
                                     />
                                 ) : (
                                     <div className="w-full h-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
-                                        <Icon icon="carbon:nurse" className="text-6xl text-gray-300" />
+                                        <Icon icon="solar:user-speak-linear" className="text-6xl text-gray-300" />
                                     </div>
                                 )}
 
@@ -49,7 +49,7 @@ export default function NursesList({ nurses }: NursesListProps) {
 
                                 {/* Top Badge */}
                                 <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1">
-                                    <Icon icon="mdi:star" className="text-yellow-400 text-sm" /> {nurse.ratings || "5.0"}
+                                    <Icon icon="solar:star-bold" className="text-yellow-400 text-sm" /> {nurse.ratings || "5.0"}
                                 </div>
 
                                 {/* Content Overlay */}
@@ -63,7 +63,7 @@ export default function NursesList({ nurses }: NursesListProps) {
                                             <p className="text-xl font-bold">${nurse.fees}</p>
                                         </div>
                                         <button className="h-10 w-10 bg-white text-gray-900 rounded-full flex items-center justify-center hover:bg-rose-500 hover:text-white transition-colors">
-                                            <Icon icon="lucide:arrow-up-right" className="text-xl" />
+                                            <Icon icon="solar:arrow-right-up-linear" className="text-xl" />
                                         </button>
                                     </div>
                                 </div>
@@ -77,9 +77,10 @@ export default function NursesList({ nurses }: NursesListProps) {
                         href="/nurses"
                         className="inline-flex items-center gap-2 text-rose-500 font-semibold"
                     >
-                        View All Team <Icon icon="lucide:arrow-right" />
+                        View All Team <Icon icon="solar:arrow-right-linear" />
                     </Link>
                 </div>
+
             </div>
         </section>
     );
