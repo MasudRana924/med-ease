@@ -11,7 +11,7 @@ export default async function Home() {
   const medicinesData = MedicineService.getFeatured();
 
   const [nurses, medicines] = await Promise.all([nursesData, medicinesData]);
-
+console.log("hiiii server")
   return (
     <div className="flex flex-col min-h-screen">
       <Header />

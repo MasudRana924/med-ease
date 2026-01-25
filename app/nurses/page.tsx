@@ -3,6 +3,8 @@ import Footer from "@/components/Footer";
 import NursesList from "@/components/NursesList";
 import { NurseService } from "@/lib/api/services";
 
+export const revalidate = 60; // Revalidate every 60 seconds
+
 export default async function NursesPage() {
     const nurses = await NurseService.getAll();
 

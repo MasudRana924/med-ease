@@ -17,7 +17,7 @@ export default function Header() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-
+console.log("client")
     return (
         <header
             className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled
