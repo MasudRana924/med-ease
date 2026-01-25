@@ -5,77 +5,104 @@ import Footer from "@/components/Footer";
 import { useCart } from "@/context/CartContext";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import Button from "@/components/Button";
 
 export default function CartPage() {
     const { cart, removeFromCart } = useCart();
 
+    const hasItems = cart && cart.length > 0;
     const total = cart.reduce((acc, item) => acc + item.price, 0);
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen bg-white text-black">
             <Header />
-            <main className="flex-1 container mx-auto px-4 py-8">
-                <h1 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white flex items-center gap-3">
-                    <Icon icon="lucide:shopping-cart" /> Shopping Cart
-                </h1>
+            <main className="flex-1 container mx-auto px-4 py-8 md:py-16 max-w-6xl">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-100 pb-6">
+                    <div>
+                        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2">Shopping Cart</h1>
+                        <p className="text-gray-500">Review your selected items before checkout.</p>
+                    </div>
+                    <div className="mt-4 md:mt-0 flex items-center gap-2 text-sm font-medium">
+                        <Icon icon="solar:bag-check-bold" className="text-lg" />
+                        <span>{cart.length} Items</span>
+                    </div>
+                </div>
 
-                {cart.length === 0 ? (
-                    <div className="text-center py-20 bg-gray-50 rounded-3xl dark:bg-gray-900/50">
-                        <Icon icon="lucide:shopping-bag" className="text-6xl text-gray-300 mx-auto mb-4" />
-                        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Your cart is empty</h2>
-                        <Link href="/medicine" className="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                            Continue Shopping
+                {!hasItems ? (
+                    <div className="text-center py-32 flex flex-col items-center justify-center">
+                        <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-6">
+                            <Icon icon="solar:cart-large-minimalistic-linear" className="text-4xl text-gray-400" />
+                        </div>
+                        <h2 className="text-2xl font-bold mb-3">Your cart is empty</h2>
+                        <p className="text-gray-500 mb-8 max-w-md">Looks like you haven't added anything yet. Explore our medicines and healthcare products.</p>
+                        <Link href="/medicine">
+                            <Button>Start Shopping</Button>
                         </Link>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <div className="lg:col-span-2 space-y-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-24">
+                        {/* Cart Items List */}
+                        <div className="lg:col-span-2 space-y-8">
                             {cart.map((item, index) => (
-                                <div key={`${item._id}-${index}`} className="flex gap-4 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-                                    <div className="h-24 w-24 bg-gray-50 dark:bg-gray-700 rounded-lg flex items-center justify-center p-2">
+                                <div key={`${item._id}-${index}`} className="group flex flex-col sm:flex-row gap-6 items-start sm:items-center py-4 border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors p-4 rounded-2xl">
+                                    <div className="h-24 w-24 bg-gray-50 rounded-xl flex items-center justify-center p-2 flex-shrink-0">
                                         {item.image ? (
-                                            <img src={item.image} alt={item.name} className="h-full w-full object-contain" />
+                                            <img src={item.image} alt={item.name} className="h-full w-full object-contain mix-blend-multiply" />
                                         ) : (
-                                            <Icon icon="medical-icon:i-medicines" className="text-4xl text-gray-300" />
+                                            <Icon icon="solar:pill-linear" className="text-3xl text-gray-400" />
                                         )}
                                     </div>
-                                    <div className="flex-1">
-                                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{item.name}</h3>
-                                        <p className="text-sm text-gray-500">{item.category}</p>
-                                        <p className="text-lg font-bold text-primary mt-2">${item.price}</p>
+
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex justify-between items-start">
+                                            <div>
+                                                <h3 className="text-xl font-bold truncate pr-4">{item.name}</h3>
+                                                <p className="text-sm text-gray-500 mb-1">{item.category}</p>
+                                            </div>
+                                            <button
+                                                onClick={() => removeFromCart(item._id)}
+                                                className="p-2 text-gray-300 hover:text-black transition-colors"
+                                                title="Remove item"
+                                            >
+                                                <Icon icon="solar:trash-bin-trash-linear" className="text-xl" />
+                                            </button>
+                                        </div>
+                                        <div className="mt-2 flex items-center justify-between">
+                                            <span className="font-mono text-lg">${item.price}</span>
+                                        </div>
                                     </div>
-                                    <button
-                                        onClick={() => removeFromCart(item._id)}
-                                        className="p-2 text-gray-400 hover:text-red-500 transition-colors self-start"
-                                    >
-                                        <Icon icon="lucide:trash-2" className="text-xl" />
-                                    </button>
                                 </div>
                             ))}
                         </div>
 
-                        <div className="h-fit bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 sticky top-24">
-                            <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Order Summary</h3>
-                            <div className="space-y-2 mb-6 text-gray-600 dark:text-gray-300">
-                                <div className="flex justify-between">
-                                    <span>Subtotal</span>
-                                    <span>${total.toFixed(2)}</span>
+                        {/* Order Summary */}
+                        <div className="relative">
+                            <div className="sticky top-32 p-8 bg-gray-50 rounded-3xl">
+                                <h3 className="text-2xl font-bold mb-6">Order Summary</h3>
+
+                                <div className="space-y-4 mb-8 text-sm">
+                                    <div className="flex justify-between text-gray-600">
+                                        <span>Subtotal</span>
+                                        <span className="font-mono">${total.toFixed(2)}</span>
+                                    </div>
+                                    <div className="flex justify-between text-gray-600">
+                                        <span>Tax (5%)</span>
+                                        <span className="font-mono">${(total * 0.05).toFixed(2)}</span>
+                                    </div>
+                                    <div className="pt-4 border-t border-gray-200 flex justify-between text-lg font-bold">
+                                        <span>Total</span>
+                                        <span className="font-mono">${(total * 1.05).toFixed(2)}</span>
+                                    </div>
                                 </div>
-                                <div className="flex justify-between">
-                                    <span>Tax (5%)</span>
-                                    <span>${(total * 0.05).toFixed(2)}</span>
-                                </div>
-                                <div className="border-t border-gray-200 dark:border-gray-700 pt-2 font-bold text-lg text-gray-900 dark:text-white flex justify-between">
-                                    <span>Total</span>
-                                    <span>${(total * 1.05).toFixed(2)}</span>
-                                </div>
+
+                                <Link href="/checkout" className="block w-full">
+                                    <Button className="w-full text-base py-4">Proceed to Checkout</Button>
+                                </Link>
+
+                                <p className="text-xs text-center text-gray-400 mt-4">
+                                    Secure Checkout by Med-Ease
+                                </p>
                             </div>
-                            <Link
-                                href="/checkout"
-                                className="block w-full text-center py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium shadow-lg shadow-primary/30"
-                            >
-                                Proceed to Checkout
-                            </Link>
                         </div>
                     </div>
                 )}

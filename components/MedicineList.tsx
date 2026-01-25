@@ -15,82 +15,78 @@ export default function MedicineList({ medicines }: MedicineListProps) {
     if (!medicines || medicines.length === 0) return null;
 
     return (
-        <section className="py-24 bg-white dark:bg-black">
+        <section className="py-24 bg-white">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="flex items-end justify-between mb-12">
-                    <div className="space-y-1">
-                        <span className="text-blue-500 font-bold tracking-widest text-xs uppercase pl-1">Online Pharmacy</span>
-                        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">Featured Medicines</h2>
+                    <div className="space-y-2">
+                        <span className="text-gray-500 font-bold tracking-[0.2em] text-xs uppercase pl-1">Online Pharmacy</span>
+                        <h2 className="text-4xl md:text-5xl font-bold text-black tracking-tight">Featured Medicines</h2>
                     </div>
                     <Link
                         href="/medicine"
-                        className="hidden md:flex items-center gap-2 text-gray-900 dark:text-white font-semibold hover:text-blue-500 transition-colors group"
+                        className="hidden md:flex items-center gap-2 text-black font-semibold hover:text-gray-600 transition-colors group"
                     >
                         Browse Store <Icon icon="solar:arrow-right-linear" className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
                     {medicines.map((medicine) => (
-                        <div key={medicine._id} className="group bg-gray-50 dark:bg-gray-900/50 rounded-[2.5rem] p-4 transition-all duration-500 hover:bg-white dark:hover:bg-gray-800 hover:shadow-2xl hover:shadow-blue-500/5 border border-transparent hover:border-blue-100 dark:hover:border-gray-700 relative overflow-hidden">
+                        <div key={medicine._id} className="group flex flex-col">
+                            {/* Image Container */}
+                            <div className="relative h-[280px] w-full rounded-2xl bg-gray-50 mb-6 flex items-center justify-center p-8 transition-transform duration-500 group-hover:-translate-y-1">
 
-                            {/* Wishlist */}
-                            <button
-                                onClick={() => addToWishlist({ ...medicine, image: medicine.image.url, category: medicine.category || 'Medicine' })}
-                                className={`absolute top-6 right-6 z-20 h-10 w-10 flex items-center justify-center rounded-2xl transition-all duration-300 ${isInWishlist(medicine._id) ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/30' : 'bg-white/90 dark:bg-gray-800/90 text-gray-400 hover:text-rose-500 hover:bg-white shadow-sm backdrop-blur-sm'}`}
-                            >
-                                <Icon icon={isInWishlist(medicine._id) ? "solar:heart-bold" : "solar:heart-linear"} className="text-xl" />
-                            </button>
+                                {/* Wishlist */}
+                                <button
+                                    onClick={() => addToWishlist({ ...medicine, image: medicine.image.url, category: medicine.category || 'Medicine' })}
+                                    className={`absolute top-4 right-4 z-20 h-8 w-8 flex items-center justify-center rounded-full transition-all duration-200 ${isInWishlist(medicine._id) ? 'text-black' : 'text-gray-300 hover:text-black'}`}
+                                >
+                                    <Icon icon={isInWishlist(medicine._id) ? "solar:heart-bold" : "solar:heart-linear"} className="text-xl" />
+                                </button>
 
-                            <div className="relative h-[260px] w-full rounded-[2rem] bg-white dark:bg-gray-800/80 mb-6 flex items-center justify-center p-8 shadow-sm group-hover:shadow-inner transition-shadow duration-500">
                                 {/* Badge */}
                                 {medicine.type && (
-                                    <div className="absolute top-4 left-4 bg-gray-900/5 dark:bg-white/10 backdrop-blur-md text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                                    <div className="absolute top-4 left-4 bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-black border border-black/5">
                                         {medicine.type}
                                     </div>
                                 )}
 
                                 {medicine.image ? (
-                                    <img src={medicine.image.url} alt={medicine.name} className="h-full w-full object-contain transition-all duration-700 ease-in-out" />
+                                    <img src={medicine.image.url} alt={medicine.name} className="h-full w-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105" />
                                 ) : (
-                                    <Icon icon="solar:medical-kit-linear" className="text-8xl text-gray-200 dark:text-gray-700" />
+                                    <Icon icon="solar:medical-kit-linear" className="text-8xl text-gray-200" />
                                 )}
                             </div>
 
-                            <div className="px-2 pb-2 space-y-4">
-                                <div className="space-y-1">
-                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white truncate leading-tight group-hover:text-blue-600 transition-colors">{medicine.name}</h3>
-                                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest">{medicine.company}</p>
-                                </div>
+                            <div className="flex-1 flex flex-col">
+                                <h3 className="text-lg font-bold text-black leading-tight mb-1">{medicine.name}</h3>
+                                <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">{medicine.company}</p>
 
-                                <div className="flex items-center justify-between pt-2">
-                                    <div className="flex flex-col">
-                                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter mb-0.5">Price</span>
-                                        <div className="flex items-baseline gap-0.5">
-                                            <span className="text-sm font-bold text-blue-600 dark:text-blue-400">$</span>
-                                            <span className="text-2xl font-black text-gray-900 dark:text-white">{medicine.price}</span>
-                                        </div>
+                                <div className="mt-auto flex items-center justify-between">
+                                    <div className="flex items-baseline gap-0.5">
+                                        <span className="text-sm font-medium text-gray-500">$</span>
+                                        <span className="text-2xl font-bold text-black">{medicine.price}</span>
                                     </div>
 
                                     <button
                                         onClick={() => addToCart({ ...medicine, image: medicine.image.url, category: medicine.category || 'Medicine' })}
                                         disabled={isInCart(medicine._id)}
-                                        className={`h-14 w-14 rounded-2xl flex items-center justify-center transition-all duration-300 ${isInCart(medicine._id)
-                                            ? 'bg-green-500 text-white shadow-lg shadow-green-500/20'
-                                            : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-white shadow-xl hover:shadow-blue-500/25 active:scale-95'
+                                        className={`h-10 px-6 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${isInCart(medicine._id)
+                                            ? 'bg-black text-white'
+                                            : 'bg-white border border-black text-black hover:bg-black hover:text-white'
                                             }`}
                                     >
-                                        <Icon icon={isInCart(medicine._id) ? "solar:check-circle-linear" : "solar:cart-large-2-linear"} className="text-2xl" />
+                                        {isInCart(medicine._id) ? "Added" : "Add"}
                                     </button>
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
-                <div className="mt-12 text-center md:hidden">
+                <div className="mt-16 text-center md:hidden">
                     <Link
                         href="/medicine"
-                        className="inline-flex items-center gap-2 text-gray-900 dark:text-white font-semibold"
+                        className="inline-flex items-center gap-2 text-black font-semibold border-b border-black pb-0.5"
                     >
                         Browse Store <Icon icon="solar:arrow-right-linear" />
                     </Link>
