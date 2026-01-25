@@ -7,6 +7,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AuthService } from "@/lib/api/services";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -38,94 +40,116 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen bg-white">
             <Header />
-            <main className="flex-1 flex items-center justify-center bg-gray-50 dark:bg-black/20 py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-md w-full space-y-8 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl">
-                    <div>
-                        <h2 className="mt-6 text-start text-3xl font-extrabold text-gray-900 dark:text-white">
-                            Sign in to your account
-                        </h2>
-                    </div>
-                    <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+            <main className="flex-1 flex w-full">
+                {/* Left Side - Form */}
+                <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-24">
+                    <div className="max-w-md w-full space-y-10">
                         <div className="space-y-4">
-                            <div>
-                                <label htmlFor="email-address" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Email address
-                                </label>
-                                <input
-                                    id="email-address"
-                                    name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    required
-                                    className="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                    placeholder="Email address"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Password
-                                </label>
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete="current-password"
-                                    required
-                                    className="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                    placeholder="Password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </div>
+                            <h2 className="text-4xl lg:text-5xl font-bold text-black tracking-tight">
+                                Welcome back
+                            </h2>
+                            <p className="text-gray-500 text-lg">
+                                Please enter your details to sign in.
+                            </p>
                         </div>
 
-                        {error && (
-                            <div className="text-red-500 text-sm text-center bg-red-50 dark:bg-red-900/20 p-2 rounded">
-                                {error}
-                            </div>
-                        )}
+                        <form className="space-y-8" onSubmit={handleSubmit}>
+                            <div className="space-y-6">
+                                <div className="space-y-2">
+                                    <label htmlFor="email" className="text-sm font-bold uppercase tracking-wider text-black">
+                                        Email
+                                    </label>
+                                    <div className="relative">
+                                        <input
+                                            id="email"
+                                            name="email"
+                                            type="email"
+                                            required
+                                            className="w-full pb-4 pt-2 border-b-2 border-gray-200 focus:border-black focus:outline-none transition-colors bg-transparent text-xl font-medium placeholder:text-gray-300"
+                                            placeholder="yourrmail.com"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
 
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                                <input
-                                    id="remember-me"
-                                    name="remember-me"
-                                    type="checkbox"
-                                    className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                                />
-                                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">
-                                    Remember me
+                                <div className="space-y-2">
+                                    <label htmlFor="password" className="text-sm font-bold uppercase tracking-wider text-black">
+                                        Password
+                                    </label>
+                                    <div className="relative">
+                                        <input
+                                            id="password"
+                                            name="password"
+                                            type="password"
+                                            required
+                                            className="w-full pb-4 pt-2 border-b-2 border-gray-200 focus:border-black focus:outline-none transition-colors bg-transparent text-xl font-medium placeholder:text-gray-300"
+                                            placeholder="••••••••"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {error && (
+                                <div className="p-4 bg-gray-50 border-l-4 border-black text-gray-900 text-sm font-medium">
+                                    {error}
+                                </div>
+                            )}
+
+                            <div className="flex items-center justify-between pt-2">
+                                <label className="flex items-center gap-3 cursor-pointer group">
+                                    <input type="checkbox" className="w-5 h-5 border-2 border-gray-300 rounded checked:bg-black checked:border-black transition-all" />
+                                    <span className="text-sm font-medium text-gray-500 group-hover:text-black transition-colors">Remember me</span>
                                 </label>
+                                <Link href="#" className="text-sm font-bold text-black border-b border-black pb-0.5 hover:opacity-70 transition-opacity">
+                                    Forgot Password?
+                                </Link>
                             </div>
 
-                            <div className="text-sm">
-                                <a href="#" className="font-medium text-primary hover:text-primary/80">
-                                    Forgot your password?
-                                </a>
-                            </div>
-                        </div>
-
-                        <div>
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-70 disabled:cursor-not-allowed transition-colors"
+                                className="w-full py-5 bg-black text-white text-lg font-bold rounded-full hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                             >
                                 {loading ? (
-                                    <Icon icon="solar:restart-linear" className="h-5 w-5 animate-spin" />
+                                    <Icon icon="eos-icons:loading" className="h-6 w-6 animate-spin" />
                                 ) : (
                                     <>
-                                        Sign in
+                                        Sign In
                                     </>
                                 )}
                             </button>
-                        </div>
-                    </form>
 
+                            <p className="text-center text-gray-500 text-sm">
+                                Don't have an account?{" "}
+                                <Link href="/register" className="font-bold text-black border-b border-gray-300 hover:border-black transition-all">
+                                    Sign up for free
+                                </Link>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+
+                {/* Right Side - Image */}
+                <div className="hidden lg:block w-1/2 relative bg-gray-100">
+                    <div className="absolute inset-0 bg-black/10 z-10" />
+                    <Image
+                        src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format&fit=crop"
+                        alt="Medical Focus"
+                        fill
+                        className="object-cover grayscale"
+                        priority
+                    />
+                    <div className="absolute bottom-12 left-12 right-12 z-20 text-white">
+                        <blockquote className="text-3xl font-bold leading-tight mb-4">
+                            "The art of medicine consists of amusing the patient while nature cures the disease."
+                        </blockquote>
+                        <cite className="text-lg opacity-80 not-italic">— Voltaire</cite>
+                    </div>
                 </div>
             </main>
             <Footer />
