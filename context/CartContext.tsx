@@ -8,6 +8,7 @@ interface Product {
     price: number;
     image: string;
     category: string;
+    quantity?: number;
     // Add other necessary fields
 }
 
@@ -16,6 +17,7 @@ interface CartContextType {
     wishlist: Product[];
     addToCart: (product: Product) => void;
     removeFromCart: (productId: string) => void;
+    updateQuantity: (productId: string, quantity: number) => void;
     addToWishlist: (product: Product) => void;
     removeFromWishlist: (productId: string) => void;
     isInCart: (productId: string) => boolean;
@@ -32,7 +34,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         const storedCart = localStorage.getItem("cart");
         const storedWishlist = localStorage.getItem("wishlist");
-        if (storedCart) setCart(JSON.parse(storedCart));
+        if (storedCart) {
+            const parsedCart = JSON.parse(storedCart);
+            // Migration: Ensure all items have a quantity of at least 1
+            const migratedCart = parsedCart.map((item: Product) => ({
+                ...item,
+                quantity: item.quantity || 1
+            }));
+            setCart(migratedCart);
+        }
         if (storedWishlist) setWishlist(JSON.parse(storedWishlist));
     }, []);
 
@@ -46,13 +56,30 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }, [wishlist]);
 
     const addToCart = (product: Product) => {
-        if (!cart.some((item) => item._id === product._id)) {
-            setCart((prev) => [...prev, product]);
-        }
+        setCart((prev) => {
+            const existingItem = prev.find((item) => item._id === product._id);
+            if (existingItem) {
+                return prev.map((item) =>
+                    item._id === product._id
+                        ? { ...item, quantity: (item.quantity || 1) + 1 }
+                        : item
+                );
+            }
+            return [...prev, { ...product, quantity: 1 }];
+        });
     };
 
     const removeFromCart = (productId: string) => {
         setCart((prev) => prev.filter((item) => item._id !== productId));
+    };
+
+    const updateQuantity = (productId: string, quantity: number) => {
+        if (quantity < 1) return;
+        setCart((prev) =>
+            prev.map((item) =>
+                item._id === productId ? { ...item, quantity } : item
+            )
+        );
     };
 
     const addToWishlist = (product: Product) => {
@@ -75,6 +102,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
                 wishlist,
                 addToCart,
                 removeFromCart,
+                updateQuantity,
                 addToWishlist,
                 removeFromWishlist,
                 isInCart,

@@ -7,79 +7,161 @@ import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { Icon } from "@iconify/react";
 
+import { useState, useEffect } from "react";
+
 export default function CheckoutPage() {
     const { user } = useAuth();
     const { cart } = useCart();
 
-    const total = cart.reduce((acc, item) => acc + item.price, 0);
+    const [shippingInfo, setShippingInfo] = useState({
+        name: user?.name || "",
+        email: user?.email || "",
+        phone: user?.phone || "",
+        address: ""
+    });
+
+    useEffect(() => {
+        if (user) {
+            setShippingInfo(prev => ({
+                ...prev,
+                name: prev.name || user.name || "",
+                email: prev.email || user.email || "",
+                phone: prev.phone || user.phone || ""
+            }));
+        }
+    }, [user]);
+
+    const total = cart.reduce((acc, item) => acc + (item.price * (item.quantity || 1)), 0);
 
     return (
         <AuthGuard>
-            <div className="flex flex-col min-h-screen">
+            <div className="flex flex-col min-h-screen bg-white text-black">
                 <Header />
-                <main className="flex-1 container mx-auto px-4 py-8">
-                <h1 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white flex items-center gap-3">
-                    <Icon icon="lucide:check-circle" className="text-green-500" /> Checkout
-                </h1>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    {/* User Details */}
-                    <div className="space-y-6">
-                        <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
-                            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                <Icon icon="lucide:user" /> Shipping Information
-                            </h3>
-                            <div className="space-y-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
-                                    <input type="text" value={user?.name || ""} disabled className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-50 dark:bg-gray-700 dark:border-gray-600 p-2" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-                                    <input type="email" value={user?.email || ""} disabled className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-50 dark:bg-gray-700 dark:border-gray-600 p-2" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Phone</label>
-                                    <input type="tel" value={user?.phone || ""} disabled className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-50 dark:bg-gray-700 dark:border-gray-600 p-2" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Address</label>
-                                    <textarea rows={3} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 dark:bg-gray-700 dark:border-gray-600" placeholder="123 Medical Avenue, NY"></textarea>
-                                </div>
-                            </div>
+                <main className="flex-1 container mx-auto px-4 py-8 md:py-16 max-w-6xl">
+                    <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-100 pb-6">
+                        <div>
+                            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2">Checkout</h1>
+                            <p className="text-gray-500">Complete your order by providing shipping details.</p>
+                        </div>
+                        <div className="mt-4 md:mt-0 flex items-center gap-2 text-sm font-medium">
+                            <Icon icon="solar:bag-check-bold" className="text-lg" />
+                            <span>{cart.length} Items</span>
                         </div>
                     </div>
 
-                    {/* Order Summary & Confirm */}
-                    <div className="space-y-6">
-                        <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
-                            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                <Icon icon="lucide:package" /> Order Summary
-                            </h3>
-                            <ul className="space-y-3 mb-6 max-h-60 overflow-y-auto">
-                                {cart.map((item, idx) => (
-                                    <li key={`${item._id}-${idx}`} className="flex justify-between text-sm">
-                                        <span className="text-gray-600 dark:text-gray-300">{item.name}</span>
-                                        <span className="font-medium">${item.price}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                            <div className="border-t border-gray-200 dark:border-gray-700 pt-4 space-y-2">
-                                <div className="flex justify-between font-bold text-lg">
-                                    <span>Total</span>
-                                    <span>${(total * 1.05).toFixed(2)}</span>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-24">
+                        {/* Shipping Details */}
+                        <div className="lg:col-span-2 space-y-12">
+                            <section>
+                                <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center text-sm">1</div>
+                                    Shipping Information
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-bold uppercase tracking-wider text-gray-500">Full Name</label>
+                                        <input
+                                            type="text"
+                                            value={shippingInfo.name}
+                                            onChange={(e) => setShippingInfo({ ...shippingInfo, name: e.target.value })}
+                                            className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:bg-white focus:ring-2 focus:ring-black outline-none transition-all"
+                                            placeholder="John Doe"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-bold uppercase tracking-wider text-gray-500">Email Address</label>
+                                        <input
+                                            type="email"
+                                            value={shippingInfo.email}
+                                            onChange={(e) => setShippingInfo({ ...shippingInfo, email: e.target.value })}
+                                            className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:bg-white focus:ring-2 focus:ring-black outline-none transition-all"
+                                            placeholder="john@example.com"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-bold uppercase tracking-wider text-gray-500">Phone Number</label>
+                                        <input
+                                            type="tel"
+                                            value={shippingInfo.phone}
+                                            onChange={(e) => setShippingInfo({ ...shippingInfo, phone: e.target.value })}
+                                            className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:bg-white focus:ring-2 focus:ring-black outline-none transition-all"
+                                            placeholder="+1 (555) 000-0000"
+                                        />
+                                    </div>
+                                    <div className="md:col-span-2 space-y-2">
+                                        <label className="text-sm font-bold uppercase tracking-wider text-gray-500">Delivery Address</label>
+                                        <textarea
+                                            rows={3}
+                                            value={shippingInfo.address}
+                                            onChange={(e) => setShippingInfo({ ...shippingInfo, address: e.target.value })}
+                                            className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:bg-white focus:ring-2 focus:ring-black outline-none transition-all resize-none"
+                                            placeholder="123 Medical Avenue, NY"
+                                        ></textarea>
+                                    </div>
                                 </div>
-                            </div>
+                            </section>
 
-                            <button
-                                className="w-full mt-8 py-4 bg-green-600 text-white rounded-xl font-bold text-lg hover:bg-green-700 transition-colors shadow-lg shadow-green-500/30 flex items-center justify-center gap-2"
-                                onClick={() => alert("Order Placed Successfully! (Simulation)")}
-                            >
-                                Confirm Checkout <Icon icon="lucide:check" />
-                            </button>
+                            <section>
+                                <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center text-sm">2</div>
+                                    Payment Method
+                                </h3>
+                                <div className="p-6 border-2 border-black rounded-2xl flex items-center justify-between">
+                                    <div className="flex items-center gap-4">
+                                        <Icon icon="solar:card-bold" className="text-2xl" />
+                                        <div>
+                                            <p className="font-bold">Cash on Delivery</p>
+                                            <p className="text-sm text-gray-500">Pay when you receive your order</p>
+                                        </div>
+                                    </div>
+                                    <Icon icon="solar:check-circle-bold" className="text-2xl" />
+                                </div>
+                            </section>
+                        </div>
+
+                        {/* Order Summary */}
+                        <div className="relative">
+                            <div className="sticky top-32 p-8 bg-gray-50 rounded-3xl border border-gray-100">
+                                <h3 className="text-2xl font-bold mb-6">Order Summary</h3>
+                                <div className="space-y-4 mb-8 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                                    {cart.map((item, idx) => (
+                                        <div key={`${item._id}-${idx}`} className="flex justify-between items-start gap-4 text-sm">
+                                            <div className="flex-1">
+                                                <p className="font-bold">{item.name}</p>
+                                                <p className="text-gray-500">Qty: {item.quantity || 1}</p>
+                                            </div>
+                                            <span className="font-mono font-bold">${(item.price * (item.quantity || 1)).toFixed(2)}</span>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="space-y-4 pt-6 border-t border-gray-200">
+                                    <div className="flex justify-between text-gray-600 text-sm">
+                                        <span>Subtotal</span>
+                                        <span className="font-mono">${total.toFixed(2)}</span>
+                                    </div>
+                                    <div className="flex justify-between text-gray-600 text-sm">
+                                        <span>Tax (5%)</span>
+                                        <span className="font-mono">${(total * 0.05).toFixed(2)}</span>
+                                    </div>
+                                    <div className="pt-4 flex justify-between text-xl font-bold">
+                                        <span>Total</span>
+                                        <span className="font-mono">${(total * 1.05).toFixed(2)}</span>
+                                    </div>
+                                </div>
+
+                                <button
+                                    className="w-full mt-8 py-4 bg-black text-white rounded-xl font-bold text-lg hover:bg-gray-800 transition-all shadow-xl shadow-black/10 flex items-center justify-center gap-2"
+                                    onClick={() => alert("Order Placed Successfully! (Simulation)")}
+                                >
+                                    Confirm Order <Icon icon="solar:arrow-right-up-linear" />
+                                </button>
+                                <p className="text-xs text-center text-gray-400 mt-4">
+                                    By clicking "Confirm Order", you agree to our Terms of Service.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </main>
                 <Footer />
             </div>

@@ -10,11 +10,14 @@ import { MedicineService } from "@/lib/medicine/actions";
 import { Medicine } from "@/types";
 import Button from "@/components/Button";
 
+import GridSwitcher from "@/components/GridSwitcher";
+
 function SearchableMedicineList() {
     const searchParams = useSearchParams();
     const [medicines, setMedicines] = useState<Medicine[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
+    const [columns, setColumns] = useState(4);
     const { addToCart, addToWishlist, isInWishlist } = useCart();
 
     useEffect(() => {
@@ -38,11 +41,21 @@ function SearchableMedicineList() {
         return () => clearTimeout(timer);
     }, [searchTerm]);
 
+    const getGridColsClass = () => {
+        switch (columns) {
+            case 1: return "grid-cols-1";
+            case 2: return "grid-cols-1 sm:grid-cols-2";
+            case 3: return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
+            case 4: return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4";
+            default: return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4";
+        }
+    };
+
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="mb-12 flex flex-col items-center">
                 <h1 className="text-4xl font-bold mb-6 text-black tracking-tight">Find Your Medicine</h1>
-                <div className="relative w-full max-w-xl">
+                <div className="relative w-full max-w-xl mb-8">
                     <Icon icon="lucide:search" className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
                     <input
                         type="text"
@@ -52,6 +65,14 @@ function SearchableMedicineList() {
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
+
+                <div className="flex items-center justify-between w-full border-b border-gray-100 pb-4">
+                    <p className="text-gray-500 font-medium">{medicines.length} items found</p>
+                    <div className="flex items-center gap-4">
+                        <span className="text-sm font-semibold text-gray-400 uppercase tracking-wider hidden sm:block">View:</span>
+                        <GridSwitcher currentColumns={columns} onChange={setColumns} />
+                    </div>
+                </div>
             </div>
 
             {loading ? (
@@ -60,10 +81,10 @@ function SearchableMedicineList() {
                     <p className="text-gray-500">Searching medicines...</p>
                 </div>
             ) : medicines.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className={`grid ${getGridColsClass()} gap-8 transition-all duration-500`}>
                     {medicines.map((medicine) => (
-                        <div key={medicine._id} className="bg-white rounded-2xl p-4 flex flex-col transition-transform hover:-translate-y-1 duration-300 border border-transparent hover:border-black/5">
-                            <div className="relative h-56 w-full rounded-xl bg-gray-50 mb-4 overflow-hidden flex items-center justify-center p-6">
+                        <div key={medicine._id} className={`bg-white rounded-2xl p-4 flex flex-col transition-all duration-300 border border-transparent hover:border-black/5 hover:shadow-xl ${columns === 1 ? 'sm:flex-row sm:items-center sm:gap-8' : ''}`}>
+                            <div className={`relative rounded-xl bg-gray-50 overflow-hidden flex items-center justify-center p-6 ${columns === 1 ? 'h-48 w-full sm:w-64 mb-0' : 'h-56 w-full mb-4'}`}>
                                 {/* Wishlist Button */}
                                 <button
                                     onClick={() => addToWishlist({ ...medicine, image: medicine.image.url, category: medicine.category || 'Medicine' })}
@@ -78,23 +99,30 @@ function SearchableMedicineList() {
                                 )}
                             </div>
 
-                            <div className="space-y-1 flex-grow">
-                                <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">{medicine.category || "General"}</p>
-                                <h3 className="text-lg font-bold text-black line-clamp-1">{medicine.name}</h3>
-                                <p className="text-xs text-gray-400 uppercase tracking-wide">{medicine.company}</p>
-                            </div>
-
-                            <div className="flex items-center justify-between pt-4 mt-2">
-                                <div className="flex items-baseline gap-0.5">
-                                    <span className="text-sm font-medium text-gray-500">$</span>
-                                    <span className="text-2xl font-bold text-black">{medicine.price}</span>
+                            <div className={`flex flex-col flex-grow ${columns === 1 ? 'justify-center' : ''}`}>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">{medicine.category || "General"}</p>
+                                    <h3 className={`font-bold text-black line-clamp-1 ${columns === 1 ? 'text-2xl' : 'text-lg'}`}>{medicine.name}</h3>
+                                    <p className="text-xs text-gray-400 uppercase tracking-wide">{medicine.company}</p>
+                                    {columns === 1 && (
+                                        <p className="text-gray-500 text-sm mt-4 line-clamp-2 max-w-2xl">
+                                            {medicine.description || "High-quality medicine provided by trustable manufacturers to ensure your health and well-being."}
+                                        </p>
+                                    )}
                                 </div>
-                                <button
-                                    onClick={() => addToCart({ ...medicine, image: medicine.image.url, category: medicine.category || 'Medicine' })}
-                                    className="px-6 py-2 rounded-full bg-black text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm font-bold"
-                                >
-                                    <Icon icon="solar:cart-plus-linear" className="text-lg" /> Add
-                                </button>
+
+                                <div className={`flex items-center justify-between pt-4 ${columns === 1 ? 'mt-4 border-t border-gray-50' : 'mt-2'}`}>
+                                    <div className="flex items-baseline gap-0.5">
+                                        <span className="text-sm font-medium text-gray-500">$</span>
+                                        <span className={`${columns === 1 ? 'text-3xl' : 'text-2xl'} font-bold text-black`}>{medicine.price}</span>
+                                    </div>
+                                    <button
+                                        onClick={() => addToCart({ ...medicine, image: medicine.image.url, category: medicine.category || 'Medicine' })}
+                                        className={`${columns === 1 ? 'px-8 py-3' : 'px-6 py-2'} rounded-full bg-black text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm font-bold shadow-lg shadow-black/10`}
+                                    >
+                                        <Icon icon="solar:cart-plus-linear" className="text-lg" /> Add to Cart
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))}

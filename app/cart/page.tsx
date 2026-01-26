@@ -8,10 +8,10 @@ import Link from "next/link";
 import Button from "@/components/Button";
 
 export default function CartPage() {
-    const { cart, removeFromCart } = useCart();
+    const { cart, removeFromCart, updateQuantity } = useCart();
 
     const hasItems = cart && cart.length > 0;
-    const total = cart.reduce((acc, item) => acc + item.price, 0);
+    const total = cart.reduce((acc, item) => acc + (item.price * (item.quantity || 1)), 0);
 
     return (
         <div className="flex flex-col min-h-screen bg-white text-black">
@@ -67,8 +67,33 @@ export default function CartPage() {
                                                 <Icon icon="solar:trash-bin-trash-linear" className="text-xl" />
                                             </button>
                                         </div>
-                                        <div className="mt-2 flex items-center justify-between">
-                                            <span className="font-mono text-lg">${item.price}</span>
+                                        <div className="mt-6 flex items-center justify-between">
+                                            <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-xl p-1 shadow-sm">
+                                                <button
+                                                    onClick={() => updateQuantity(item._id, (item.quantity || 1) - 1)}
+                                                    className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 rounded-lg transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
+                                                    disabled={(item.quantity || 1) <= 1}
+                                                    aria-label="Decrease quantity"
+                                                >
+                                                    <Icon icon="lucide:minus" className="text-sm" />
+                                                </button>
+                                                <div className="w-12 text-center">
+                                                    <span className="font-mono font-bold text-lg leading-none">
+                                                        {item.quantity || 1}
+                                                    </span>
+                                                </div>
+                                                <button
+                                                    onClick={() => updateQuantity(item._id, (item.quantity || 1) + 1)}
+                                                    className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 rounded-lg transition-colors"
+                                                    aria-label="Increase quantity"
+                                                >
+                                                    <Icon icon="lucide:plus" className="text-sm" />
+                                                </button>
+                                            </div>
+                                            <div className="text-right">
+                                                <p className="text-xs text-gray-400 uppercase font-bold tracking-widest mb-1">Subtotal</p>
+                                                <span className="font-mono text-2xl font-bold">${(item.price * (item.quantity || 1)).toFixed(2)}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +102,7 @@ export default function CartPage() {
 
                         {/* Order Summary */}
                         <div className="relative">
-                            <div className="sticky top-32 p-8 bg-gray-50 rounded-3xl">
+                            <div className="sticky top-32 p-8 bg-gray-50 rounded-3xl border border-gray-100">
                                 <h3 className="text-2xl font-bold mb-6">Order Summary</h3>
 
                                 <div className="space-y-4 mb-8 text-sm">
@@ -96,7 +121,7 @@ export default function CartPage() {
                                 </div>
 
                                 <Link href="/checkout" className="block w-full">
-                                    <Button className="w-full text-base py-4">Proceed to Checkout</Button>
+                                    <Button className="w-full text-base py-4 bg-black text-white hover:bg-gray-800 rounded-xl transition-all">Proceed to Checkout</Button>
                                 </Link>
 
                                 <p className="text-xs text-center text-gray-400 mt-4">
