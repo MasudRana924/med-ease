@@ -2,17 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
-
-interface User {
-  _id: string;
-  name: string;
-  email: string;
-  role: string;
-  avatar: string | null;
-  gender?: string;
-  phone?: string;
-}
+import { User } from "@/types";
 
 interface AuthContextType {
   user: User | null;
@@ -20,6 +10,7 @@ interface AuthContextType {
   login: (token: string, user: User) => void;
   logout: () => void;
   isAuthenticated: boolean;
+  isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,6 +18,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -34,9 +26,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const storedUser = localStorage.getItem("user");
 
     if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
+      try {
+        setToken(storedToken);
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error("Error parsing stored user data:", error);
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      }
     }
+    setIsLoading(false);
   }, []);
 
   const login = (newToken: string, newUser: User) => {
@@ -51,11 +50,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    router.push("/login"); // Redirect to login on logout
+    router.push("/auth/login");
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated: !!token }}>
+    <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated: !!token, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

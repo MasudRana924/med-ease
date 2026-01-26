@@ -30,7 +30,7 @@ export default function Header() {
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group">
                     <span className="text-2xl font-bold text-black tracking-tight">
-                        Med-Ease
+                        Care Sync
                     </span>
                 </Link>
 
@@ -78,12 +78,25 @@ export default function Header() {
 
                     {isAuthenticated && user ? (
                         <div className="flex items-center gap-3 pl-4 ml-2">
-                            <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-                                    <Icon icon="solar:user-circle-linear" className="text-xl text-black" />
+                            <Link
+                                href="/profile"
+                                className="flex items-center gap-2 hover:opacity-70 transition-opacity cursor-pointer group"
+                            >
+                                <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                                    {user.avatar?.url ? (
+                                        <img
+                                            src={user.avatar.url}
+                                            alt={user.name}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    ) : (
+                                        <Icon icon="solar:user-circle-linear" className="text-xl text-black" />
+                                    )}
                                 </div>
-                                <span className="text-sm font-semibold hidden md:block text-black">{user.name}</span>
-                            </div>
+                                <span className="text-sm font-semibold hidden md:block text-black group-hover:underline">
+                                    {user.name}
+                                </span>
+                            </Link>
                             <button
                                 onClick={logout}
                                 className="text-xs text-black hover:text-gray-600 font-medium uppercase tracking-wider ml-2"
@@ -92,7 +105,7 @@ export default function Header() {
                             </button>
                         </div>
                     ) : (
-                        <Link href="/login">
+                        <Link href="/auth/login">
                             <Button>Login</Button>
                         </Link>
                     )}

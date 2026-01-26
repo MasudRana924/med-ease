@@ -45,7 +45,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     },
     {
-      url: 'https://med-ease-seven.vercel.app/login',
+      url: 'https://med-ease-seven.vercel.app/auth/login',
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: 'https://med-ease-seven.vercel.app/auth/signup',
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,

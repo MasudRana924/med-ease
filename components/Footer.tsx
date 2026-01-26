@@ -71,11 +71,11 @@ export default function Footer() {
                         <div className="space-y-4">
                             <Link href="tel:1-800-HealthBridge" className="flex items-center gap-3 p-3 bg-white/5 rounded-lg hover:bg-white hover:text-black transition-colors group">
                                 <Icon icon="solar:phone-linear" className="text-white group-hover:text-black transition-colors" />
-                                <span className="text-sm">1-800-MedEase</span>
+                                <span className="text-sm">1-800-Care Sync</span>
                             </Link>
-                            <Link href="mailto:support@medease.com" className="flex items-center gap-3 p-3 bg-white/5 rounded-lg hover:bg-white hover:text-black transition-colors group">
+                            <Link href="mailto:support@Care Sync.com" className="flex items-center gap-3 p-3 bg-white/5 rounded-lg hover:bg-white hover:text-black transition-colors group">
                                 <Icon icon="solar:letter-linear" className="text-white group-hover:text-black transition-colors" />
-                                <span className="text-sm">support@medease.com</span>
+                                <span className="text-sm">support@Care Sync.com</span>
                             </Link>
                         </div>
 
@@ -90,7 +90,7 @@ export default function Footer() {
                 </div>
 
                 <div className="border-t border-gray-900 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
-                    <p>© 2026 Med-Ease. All rights reserved.</p>
+                    <p>© 2026 Care Sync. All rights reserved.</p>
                     <div className="flex gap-6 mt-4 md:mt-0">
                         <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
                         <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>

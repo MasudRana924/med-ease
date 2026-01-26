@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Medicine, Nurse } from "@/types";
+import { Medicine, Nurse, AuthResponse, ErrorResponse } from "@/types";
 
 const API_BASE_URL = "https://hospital-backend-ybf2.onrender.com/api";
 
@@ -10,11 +10,26 @@ const api = axios.create({
     },
 });
 
+// Add token to requests if available
+api.interceptors.request.use(
+    (config) => {
+        if (typeof window !== "undefined") {
+            const token = localStorage.getItem("token");
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
 export const MedicineService = {
     getAll: async (query: string = ""): Promise<Medicine[]> => {
         try {
             const response = await api.get(`/get/medicine${query}`);
-            // Handle the "medicines" wrapper in response
             let data = [];
             if (Array.isArray(response.data)) {
                 data = response.data;
@@ -38,7 +53,6 @@ export const NurseService = {
     getAll: async (): Promise<Nurse[]> => {
         try {
             const response = await api.get("/get/nurses");
-            // Handle the "nurses" wrapper in response
             let data = [];
             if (Array.isArray(response.data)) {
                 data = response.data;
@@ -59,8 +73,13 @@ export const NurseService = {
 };
 
 export const AuthService = {
-    login: async (credentials: { email: string; password: string }) => {
-        return api.post("/login", credentials);
+    login: async (credentials: { email: string; password: string }): Promise<AuthResponse> => {
+        const response = await api.post<AuthResponse>("/login", credentials);
+        return response.data;
+    },
+    signup: async (data: { name: string; email: string; password: string }): Promise<AuthResponse> => {
+        const response = await api.post<AuthResponse>("/register", data);
+        return response.data;
     }
 };
 

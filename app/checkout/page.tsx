@@ -1,42 +1,23 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AuthGuard from "@/components/guards/AuthGuard";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { Icon } from "@iconify/react";
 
 export default function CheckoutPage() {
-    const { user, isAuthenticated } = useAuth();
+    const { user } = useAuth();
     const { cart } = useCart();
-    const router = useRouter();
 
     const total = cart.reduce((acc, item) => acc + item.price, 0);
 
-    useEffect(() => {
-        // If not authenticated, redirect to login
-        // Note: Checking 'user' might be delayed due to hydration, so 'isAuthenticated' flag from token presence is better often
-        // But since I persist token in AuthContext, checking user or token is fine.
-        // AuthContext handles initial load.
-
-        // Simple protection: if no token found in storage or context after mount
-        // For better experience, a loading state in AuthContext would be good, but for now simple check.
-        const token = localStorage.getItem("token");
-        if (!token) {
-            router.push("/login?redirect=/checkout");
-        }
-    }, [router]);
-
-    if (!user && !isAuthenticated) {
-        return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-    }
-
     return (
-        <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-1 container mx-auto px-4 py-8">
+        <AuthGuard>
+            <div className="flex flex-col min-h-screen">
+                <Header />
+                <main className="flex-1 container mx-auto px-4 py-8">
                 <h1 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white flex items-center gap-3">
                     <Icon icon="lucide:check-circle" className="text-green-500" /> Checkout
                 </h1>
@@ -99,8 +80,9 @@ export default function CheckoutPage() {
                         </div>
                     </div>
                 </div>
-            </main>
-            <Footer />
-        </div>
+                </main>
+                <Footer />
+            </div>
+        </AuthGuard>
     );
 }

@@ -14,20 +14,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MedEase - Your Health Companion MedEaseUnique2026",
-  description: "MedEaseUnique2026 - Your ultimate health companion for medicines, nurses, and medical services. Find everything you need for your health.",
-  keywords: ["MedEaseUnique2026", "medicine", "health", "nurses", "medical services", "ecommerce", "pharmacy"],
+  title: "Care Sync - Your Health Companion Care SyncUnique2026",
+  description: "Care SyncUnique2026 - Your ultimate health companion for medicines, nurses, and medical services. Find everything you need for your health.",
+  keywords: ["Care SyncUnique2026", "medicine", "health", "nurses", "medical services", "ecommerce", "pharmacy"],
   openGraph: {
-    title: "MedEase - Your Health Companion MedEaseUnique2026",
-    description: "MedEaseUnique2026 - Your ultimate health companion for medicines, nurses, and medical services.",
+    title: "Care Sync - Your Health Companion Care SyncUnique2026",
+    description: "Care SyncUnique2026 - Your ultimate health companion for medicines, nurses, and medical services.",
     url: "https://med-ease-seven.vercel.app/", // Replace with your actual domain
-    siteName: "MedEase",
+    siteName: "Care Sync",
     images: [
       {
         url: "https://med-ease-seven.vercel.app/og-image.jpg", // Replace with your OG image
         width: 1200,
         height: 630,
-        alt: "MedEase - Health Companion",
+        alt: "Care Sync - Health Companion",
       },
     ],
     locale: "en_US",
@@ -35,8 +35,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MedEase - Your Health Companion MedEaseUnique2026",
-    description: "MedEaseUnique2026 - Your ultimate health companion for medicines, nurses, and medical services.",
+    title: "Care Sync - Your Health Companion Care SyncUnique2026",
+    description: "Care SyncUnique2026 - Your ultimate health companion for medicines, nurses, and medical services.",
     images: ["https://med-ease-seven.vercel.app/twitter-image.jpg"], // Replace with your Twitter image
   },
   robots: {
@@ -66,9 +66,9 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "MedEase",
+              "name": "Care Sync",
               "url": "https://med-ease-seven.vercel.app/",
-              "description": "MedEaseUnique2026 - Your ultimate health companion for medicines, nurses, and medical services.",
+              "description": "Care SyncUnique2026 - Your ultimate health companion for medicines, nurses, and medical services.",
               "sameAs": [
                 "https://facebook.com/yourpage", // Replace with actual social links
                 "https://twitter.com/yourhandle",

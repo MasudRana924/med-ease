@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Button from "@/components/Button";
 import { AuthService } from "@/lib/api/services";
-import { Icon } from "@iconify/react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -23,17 +23,25 @@ export default function LoginPage() {
         setLoading(true);
         setError("");
 
+        // Validation
+        if (!email || !password) {
+            setError("Please Enter Email & Password");
+            setLoading(false);
+            return;
+        }
+
         try {
             const response = await AuthService.login({ email, password });
 
-            if (response.data.success) {
-                login(response.data.token, response.data.user);
+            if (response.success) {
+                login(response.token, response.user);
                 router.push("/");
             } else {
                 setError("Invalid email or password");
             }
         } catch (err: any) {
-            setError(err.response?.data?.message || "Login failed. Please try again.");
+            const errorMessage = err.response?.data?.message || "Login failed. Please try again.";
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -71,6 +79,7 @@ export default function LoginPage() {
                                             placeholder="yourrmail.com"
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
+                                            disabled={loading}
                                         />
                                     </div>
                                 </div>
@@ -89,20 +98,25 @@ export default function LoginPage() {
                                             placeholder="••••••••"
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
+                                            disabled={loading}
                                         />
                                     </div>
                                 </div>
                             </div>
 
                             {error && (
-                                <div className="p-4 bg-gray-50 border-l-4 border-black text-gray-900 text-sm font-medium">
+                                <div className="p-4 bg-red-50 border-l-4 border-red-500 text-red-900 text-sm font-medium">
                                     {error}
                                 </div>
                             )}
 
                             <div className="flex items-center justify-between pt-2">
                                 <label className="flex items-center gap-3 cursor-pointer group">
-                                    <input type="checkbox" className="w-5 h-5 border-2 border-gray-300 rounded checked:bg-black checked:border-black transition-all" />
+                                    <input 
+                                        type="checkbox" 
+                                        className="w-5 h-5 border-2 border-gray-300 rounded checked:bg-black checked:border-black transition-all" 
+                                        disabled={loading}
+                                    />
                                     <span className="text-sm font-medium text-gray-500 group-hover:text-black transition-colors">Remember me</span>
                                 </label>
                                 <Link href="#" className="text-sm font-bold text-black border-b border-black pb-0.5 hover:opacity-70 transition-opacity">
@@ -110,23 +124,18 @@ export default function LoginPage() {
                                 </Link>
                             </div>
 
-                            <button
+                            <Button
                                 type="submit"
+                                loading={loading}
                                 disabled={loading}
-                                className="w-full py-5 bg-black text-white text-lg font-bold rounded-full hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                className="w-full py-5 text-lg font-bold"
                             >
-                                {loading ? (
-                                    <Icon icon="eos-icons:loading" className="h-6 w-6 animate-spin" />
-                                ) : (
-                                    <>
-                                        Sign In
-                                    </>
-                                )}
-                            </button>
+                                Sign In
+                            </Button>
 
                             <p className="text-center text-gray-500 text-sm">
                                 Don't have an account?{" "}
-                                <Link href="/register" className="font-bold text-black border-b border-gray-300 hover:border-black transition-all">
+                                <Link href="/auth/signup" className="font-bold text-black border-b border-gray-300 hover:border-black transition-all">
                                     Sign up for free
                                 </Link>
                             </p>
