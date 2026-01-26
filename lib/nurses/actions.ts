@@ -1,5 +1,12 @@
 import api from "@/lib/api/client";
+import axios from "axios";
 import { Nurse } from "@/types";
+
+interface NurseResponse {
+    success: boolean;
+    message: string;
+    data: Nurse;
+}
 
 export const NurseService = {
     getAll: async (): Promise<Nurse[]> => {
@@ -15,6 +22,21 @@ export const NurseService = {
         } catch (error) {
             console.error("Error fetching nurses:", error);
             return [];
+        }
+    },
+
+    getById: async (id: string): Promise<Nurse | null> => {
+        try {
+            // Use the med-ease-service API for nurse details
+            const nurseApiUrl = process.env.NEXT_PUBLIC_NURSE_API_BASE_URL || "https://med-ease-service.onrender.com/api";
+            const response = await axios.get<NurseResponse>(`${nurseApiUrl}/nurses/${id}`);
+            if (response.data.success && response.data.data) {
+                return response.data.data;
+            }
+            return null;
+        } catch (error) {
+            console.error("Error fetching nurse:", error);
+            return null;
         }
     },
 

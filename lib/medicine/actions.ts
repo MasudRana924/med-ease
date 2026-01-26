@@ -4,11 +4,11 @@ import { Medicine } from "@/types";
 export const MedicineService = {
     getAll: async (query: string = ""): Promise<Medicine[]> => {
         try {
-            const response = await api.get(`/get/medicine${query}`);
-            let data = [];
+            const response = await api.get<Medicine[] | { medicines: Medicine[] }>(`/get/medicine${query}`);
+            let data: Medicine[] = [];
             if (Array.isArray(response.data)) {
                 data = response.data;
-            } else if (response.data.medicines) {
+            } else if (response.data && typeof response.data === 'object' && 'medicines' in response.data) {
                 data = response.data.medicines;
             }
             return data;

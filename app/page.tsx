@@ -2,16 +2,19 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import NursesList from "@/components/NursesList";
+import DoctorsList from "@/components/DoctorsList";
 import MedicineList from "@/components/MedicineList";
 import { NurseService } from "@/lib/nurses/actions";
+import { DoctorService } from "@/lib/doctors/actions";
 import { MedicineService } from "@/lib/medicine/actions";
 import { Icon } from "@iconify/react";
 
 export default async function Home() {
   const nursesData = NurseService.getFeatured();
+  const doctorsData = DoctorService.getFeatured();
   const medicinesData = MedicineService.getFeatured();
 
-  const [nurses, medicines] = await Promise.all([nursesData, medicinesData]);
+  const [nurses, doctors, medicines] = await Promise.all([nursesData, doctorsData, medicinesData]);
   console.log("hiiii server")
   return (
     <div className="flex flex-col min-h-screen">
@@ -22,8 +25,11 @@ export default async function Home() {
         {/* Medicine List */}
         <MedicineList medicines={medicines} />
 
+        {/* Doctors List */}
+        <DoctorsList doctors={doctors} showView={false} />
+
         {/* Nurses List - Reusing MedicineList-like structure or ensuring NursesList is styled similarly */}
-        <NursesList nurses={nurses} />
+        <NursesList nurses={nurses} showView={false} />
 
         {/* Medicine Services at a Glance */}
         <section className="py-20 bg-white border-b border-gray-100">
