@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import NursesList from "@/components/NursesList";
-import { NurseService } from "@/lib/api/services";
+import { NurseService } from "@/lib/nurses/actions";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 

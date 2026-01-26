@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Icon } from "@iconify/react";
 import { useCart } from "@/context/CartContext";
-import { MedicineService } from "@/lib/api/services";
+import { MedicineService } from "@/lib/medicine/actions";
 import { Medicine } from "@/types";
 import Button from "@/components/Button";
 

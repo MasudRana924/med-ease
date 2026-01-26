@@ -3,7 +3,8 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import NursesList from "@/components/NursesList";
 import MedicineList from "@/components/MedicineList";
-import { NurseService, MedicineService } from "@/lib/api/services";
+import { NurseService } from "@/lib/nurses/actions";
+import { MedicineService } from "@/lib/medicine/actions";
 import { Icon } from "@iconify/react";
 
 export default async function Home() {

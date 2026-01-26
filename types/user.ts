@@ -21,3 +21,6 @@ export interface AuthResponse {
 export interface ErrorResponse {
     message: string;
 }
+
+// Re-export auth types
+export * from "./auth";

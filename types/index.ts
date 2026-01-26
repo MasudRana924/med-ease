@@ -2,3 +2,4 @@
 export * from "./user";
 export * from "./medicine";
 export * from "./nurse";
+export * from "./auth";

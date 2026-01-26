@@ -2,50 +2,39 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/context/AuthContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Button from "@/components/Button";
-import { AuthService } from "@/lib/api/services";
+import { AuthService } from "@/lib/auth/actions";
+import { signupSchema, type SignupFormData } from "@/lib/auth/schemas";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function SignupPage() {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
     const { login } = useAuth();
     const router = useRouter();
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm<SignupFormData>({
+        resolver: zodResolver(signupSchema),
+        mode: "onBlur", // Validate on blur for better UX
+    });
+
+    const onSubmit = async (data: SignupFormData) => {
         setError("");
-
-        // Validation
-        if (!name || !email || !password) {
-            setError("Please fill in all fields");
-            setLoading(false);
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            setError("Passwords do not match");
-            setLoading(false);
-            return;
-        }
-
-        if (password.length < 6) {
-            setError("Password must be at least 6 characters");
-            setLoading(false);
-            return;
-        }
-
         try {
-            const response = await AuthService.signup({ name, email, password });
+            const response = await AuthService.signup({
+                name: data.name,
+                email: data.email,
+                password: data.password,
+            });
 
             if (response.success) {
                 login(response.token, response.user);
@@ -56,8 +45,6 @@ export default function SignupPage() {
         } catch (err: any) {
             const errorMessage = err.response?.data?.message || "Signup failed. Please try again.";
             setError(errorMessage);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -77,7 +64,7 @@ export default function SignupPage() {
                             </p>
                         </div>
 
-                        <form className="space-y-8" onSubmit={handleSubmit}>
+                        <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
                             <div className="space-y-6">
                                 <div className="space-y-2">
                                     <label htmlFor="name" className="text-sm font-bold uppercase tracking-wider text-black">
@@ -86,16 +73,20 @@ export default function SignupPage() {
                                     <div className="relative">
                                         <input
                                             id="name"
-                                            name="name"
                                             type="text"
-                                            required
-                                            className="w-full pb-4 pt-2 border-b-2 border-gray-200 focus:border-black focus:outline-none transition-colors bg-transparent text-xl font-medium placeholder:text-gray-300"
+                                            className={`w-full pb-4 pt-2 border-b-2 focus:outline-none transition-colors bg-transparent text-xl font-medium placeholder:text-gray-300 ${
+                                                errors.name
+                                                    ? "border-red-500 focus:border-red-500"
+                                                    : "border-gray-200 focus:border-black"
+                                            }`}
                                             placeholder="John Doe"
-                                            value={name}
-                                            onChange={(e) => setName(e.target.value)}
-                                            disabled={loading}
+                                            disabled={isSubmitting}
+                                            {...register("name")}
                                         />
                                     </div>
+                                    {errors.name && (
+                                        <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+                                    )}
                                 </div>
 
                                 <div className="space-y-2">
@@ -105,16 +96,20 @@ export default function SignupPage() {
                                     <div className="relative">
                                         <input
                                             id="email"
-                                            name="email"
                                             type="email"
-                                            required
-                                            className="w-full pb-4 pt-2 border-b-2 border-gray-200 focus:border-black focus:outline-none transition-colors bg-transparent text-xl font-medium placeholder:text-gray-300"
+                                            className={`w-full pb-4 pt-2 border-b-2 focus:outline-none transition-colors bg-transparent text-xl font-medium placeholder:text-gray-300 ${
+                                                errors.email
+                                                    ? "border-red-500 focus:border-red-500"
+                                                    : "border-gray-200 focus:border-black"
+                                            }`}
                                             placeholder="yourrmail.com"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            disabled={loading}
+                                            disabled={isSubmitting}
+                                            {...register("email")}
                                         />
                                     </div>
+                                    {errors.email && (
+                                        <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                                    )}
                                 </div>
 
                                 <div className="space-y-2">
@@ -124,16 +119,20 @@ export default function SignupPage() {
                                     <div className="relative">
                                         <input
                                             id="password"
-                                            name="password"
                                             type="password"
-                                            required
-                                            className="w-full pb-4 pt-2 border-b-2 border-gray-200 focus:border-black focus:outline-none transition-colors bg-transparent text-xl font-medium placeholder:text-gray-300"
+                                            className={`w-full pb-4 pt-2 border-b-2 focus:outline-none transition-colors bg-transparent text-xl font-medium placeholder:text-gray-300 ${
+                                                errors.password
+                                                    ? "border-red-500 focus:border-red-500"
+                                                    : "border-gray-200 focus:border-black"
+                                            }`}
                                             placeholder="••••••••"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            disabled={loading}
+                                            disabled={isSubmitting}
+                                            {...register("password")}
                                         />
                                     </div>
+                                    {errors.password && (
+                                        <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+                                    )}
                                 </div>
 
                                 <div className="space-y-2">
@@ -143,16 +142,20 @@ export default function SignupPage() {
                                     <div className="relative">
                                         <input
                                             id="confirmPassword"
-                                            name="confirmPassword"
                                             type="password"
-                                            required
-                                            className="w-full pb-4 pt-2 border-b-2 border-gray-200 focus:border-black focus:outline-none transition-colors bg-transparent text-xl font-medium placeholder:text-gray-300"
+                                            className={`w-full pb-4 pt-2 border-b-2 focus:outline-none transition-colors bg-transparent text-xl font-medium placeholder:text-gray-300 ${
+                                                errors.confirmPassword
+                                                    ? "border-red-500 focus:border-red-500"
+                                                    : "border-gray-200 focus:border-black"
+                                            }`}
                                             placeholder="••••••••"
-                                            value={confirmPassword}
-                                            onChange={(e) => setConfirmPassword(e.target.value)}
-                                            disabled={loading}
+                                            disabled={isSubmitting}
+                                            {...register("confirmPassword")}
                                         />
                                     </div>
+                                    {errors.confirmPassword && (
+                                        <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>
+                                    )}
                                 </div>
                             </div>
 
@@ -164,8 +167,8 @@ export default function SignupPage() {
 
                             <Button
                                 type="submit"
-                                loading={loading}
-                                disabled={loading}
+                                loading={isSubmitting}
+                                disabled={isSubmitting}
                                 className="w-full py-5 text-lg font-bold"
                             >
                                 Sign Up

@@ -2,36 +2,38 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/context/AuthContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Button from "@/components/Button";
-import { AuthService } from "@/lib/api/services";
+import { AuthService } from "@/lib/auth/actions";
+import { loginSchema, type LoginFormData } from "@/lib/auth/schemas";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function LoginPage() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
     const { login } = useAuth();
     const router = useRouter();
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm<LoginFormData>({
+        resolver: zodResolver(loginSchema),
+        mode: "onBlur", // Validate on blur for better UX
+    });
+
+    const onSubmit = async (data: LoginFormData) => {
         setError("");
-
-        // Validation
-        if (!email || !password) {
-            setError("Please Enter Email & Password");
-            setLoading(false);
-            return;
-        }
-
         try {
-            const response = await AuthService.login({ email, password });
+            const response = await AuthService.login({
+                email: data.email,
+                password: data.password,
+            });
 
             if (response.success) {
                 login(response.token, response.user);
@@ -42,8 +44,6 @@ export default function LoginPage() {
         } catch (err: any) {
             const errorMessage = err.response?.data?.message || "Login failed. Please try again.";
             setError(errorMessage);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -63,7 +63,7 @@ export default function LoginPage() {
                             </p>
                         </div>
 
-                        <form className="space-y-8" onSubmit={handleSubmit}>
+                        <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
                             <div className="space-y-6">
                                 <div className="space-y-2">
                                     <label htmlFor="email" className="text-sm font-bold uppercase tracking-wider text-black">
@@ -72,16 +72,20 @@ export default function LoginPage() {
                                     <div className="relative">
                                         <input
                                             id="email"
-                                            name="email"
                                             type="email"
-                                            required
-                                            className="w-full pb-4 pt-2 border-b-2 border-gray-200 focus:border-black focus:outline-none transition-colors bg-transparent text-xl font-medium placeholder:text-gray-300"
+                                            className={`w-full pb-4 pt-2 border-b-2 focus:outline-none transition-colors bg-transparent text-xl font-medium placeholder:text-gray-300 ${
+                                                errors.email
+                                                    ? "border-red-500 focus:border-red-500"
+                                                    : "border-gray-200 focus:border-black"
+                                            }`}
                                             placeholder="yourrmail.com"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            disabled={loading}
+                                            disabled={isSubmitting}
+                                            {...register("email")}
                                         />
                                     </div>
+                                    {errors.email && (
+                                        <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                                    )}
                                 </div>
 
                                 <div className="space-y-2">
@@ -91,16 +95,20 @@ export default function LoginPage() {
                                     <div className="relative">
                                         <input
                                             id="password"
-                                            name="password"
                                             type="password"
-                                            required
-                                            className="w-full pb-4 pt-2 border-b-2 border-gray-200 focus:border-black focus:outline-none transition-colors bg-transparent text-xl font-medium placeholder:text-gray-300"
+                                            className={`w-full pb-4 pt-2 border-b-2 focus:outline-none transition-colors bg-transparent text-xl font-medium placeholder:text-gray-300 ${
+                                                errors.password
+                                                    ? "border-red-500 focus:border-red-500"
+                                                    : "border-gray-200 focus:border-black"
+                                            }`}
                                             placeholder="••••••••"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            disabled={loading}
+                                            disabled={isSubmitting}
+                                            {...register("password")}
                                         />
                                     </div>
+                                    {errors.password && (
+                                        <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+                                    )}
                                 </div>
                             </div>
 
@@ -115,7 +123,7 @@ export default function LoginPage() {
                                     <input 
                                         type="checkbox" 
                                         className="w-5 h-5 border-2 border-gray-300 rounded checked:bg-black checked:border-black transition-all" 
-                                        disabled={loading}
+                                        disabled={isSubmitting}
                                     />
                                     <span className="text-sm font-medium text-gray-500 group-hover:text-black transition-colors">Remember me</span>
                                 </label>
@@ -126,8 +134,8 @@ export default function LoginPage() {
 
                             <Button
                                 type="submit"
-                                loading={loading}
-                                disabled={loading}
+                                loading={isSubmitting}
+                                disabled={isSubmitting}
                                 className="w-full py-5 text-lg font-bold"
                             >
                                 Sign In
