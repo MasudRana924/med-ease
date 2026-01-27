@@ -14,20 +14,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Care Sync - Your Health Companion Care SyncUnique2026",
-  description: "Care SyncUnique2026 - Your ultimate health companion for medicines, nurses, and medical services. Find everything you need for your health.",
-  keywords: ["Care SyncUnique2026", "medicine", "health", "nurses", "medical services", "ecommerce", "pharmacy"],
+  title: "Care Sync - Med-Ease Health Companion Portal 2026",
+  description: "Med-Ease-Health-Portal-2026: Your ultimate health companion for medicines, nurses, and doctors. Secure and fast medical services at your fingertips.",
+  keywords: ["Med-Ease-Health-Portal-2026", "Care Sync", "online medicine", "nursing care", "doctor appointment", "health services"],
+  verification: {
+    google: "_PGV2fNabEPLezfniBCYLdEE00j_4DpZCGiWzc2KVrg",
+  },
   openGraph: {
-    title: "Care Sync - Your Health Companion Care SyncUnique2026",
-    description: "Care SyncUnique2026 - Your ultimate health companion for medicines, nurses, and medical services.",
-    url: "https://med-ease-seven.vercel.app/", // Replace with your actual domain
+    title: "Care Sync - Med-Ease Health Companion Portal 2026",
+    description: "Med-Ease-Health-Portal-2026: Your ultimate health companion for medicines, nurses, and doctors.",
+    url: "https://med-ease-seven.vercel.app/",
     siteName: "Care Sync",
     images: [
       {
-        url: "https://med-ease-seven.vercel.app/og-image.jpg", // Replace with your OG image
+        url: "https://med-ease-seven.vercel.app/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Care Sync - Health Companion",
+        alt: "Med-Ease Health Portal",
       },
     ],
     locale: "en_US",
@@ -35,9 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Care Sync - Your Health Companion Care SyncUnique2026",
-    description: "Care SyncUnique2026 - Your ultimate health companion for medicines, nurses, and medical services.",
-    images: ["https://med-ease-seven.vercel.app/twitter-image.jpg"], // Replace with your Twitter image
+    title: "Care Sync - Med-Ease Health Companion Portal 2026",
+    description: "Med-Ease-Health-Portal-2026: Your ultimate health companion for medicines, nurses, and doctors.",
+    images: ["https://med-ease-seven.vercel.app/twitter-image.jpg"],
   },
   robots: {
     index: true,
@@ -71,7 +74,7 @@ export default function RootLayout({
               "@type": "Organization",
               "name": "Care Sync",
               "url": "https://med-ease-seven.vercel.app/",
-              "description": "Care SyncUnique2026 - Your ultimate health companion for medicines, nurses, and medical services.",
+              "description": "Med-Ease-Health-Portal-2026 - Your ultimate health companion for medicines, nurses, and medical services.",
               "sameAs": [
                 "https://facebook.com/yourpage", // Replace with actual social links
                 "https://twitter.com/yourhandle",
