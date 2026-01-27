@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Icon } from "@iconify/react";
+import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import { MedicineService } from "@/lib/medicine/actions";
 import { Medicine } from "@/types";
@@ -93,7 +94,13 @@ function SearchableMedicineList() {
                                     <Icon icon={isInWishlist(medicine._id) ? "solar:heart-bold" : "solar:heart-linear"} className="text-xl" />
                                 </button>
                                 {medicine.image ? (
-                                    <img src={medicine.image.url} alt={medicine.name} className="h-full w-full object-contain mix-blend-multiply" />
+                                    <Image
+                                        src={medicine.image.url}
+                                        alt={medicine.name}
+                                        fill
+                                        className="object-contain mix-blend-multiply"
+                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                                    />
                                 ) : (
                                     <Icon icon="medical-icon:i-medicines" className="text-6xl text-gray-200" />
                                 )}

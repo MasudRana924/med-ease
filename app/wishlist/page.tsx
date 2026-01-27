@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { useCart } from "@/context/CartContext";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function WishlistPage() {
     const { wishlist, removeFromWishlist, addToCart, isInCart } = useCart();
@@ -37,7 +38,13 @@ export default function WishlistPage() {
                                         <Icon icon="lucide:x" />
                                     </button>
                                     {item.image ? (
-                                        <img src={item.image} alt={item.name} className="h-full w-full object-contain p-4 group-hover:scale-105 transition-transform duration-300" />
+                                        <Image
+                                            src={item.image}
+                                            alt={item.name}
+                                            fill
+                                            className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                                        />
                                     ) : (
                                         <Icon icon="medical-icon:i-medicines" className="text-6xl text-gray-300" />
                                     )}

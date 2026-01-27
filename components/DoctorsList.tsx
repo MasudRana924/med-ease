@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import Image from "next/image";
 import { Doctor } from "@/types";
 import GridSwitcher from "./GridSwitcher";
 
@@ -28,7 +29,7 @@ export default function DoctorsList({ doctors, showView = true }: DoctorsListPro
 
     return (
         <section id="doctors" className="py-24 bg-white">
-            <div className="container mx-auto px-4 md:px-6">
+            <div className="w-full lg:w-9/12 mx-auto px-4 md:px-6">
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                     <div className="space-y-2">
                         <span className="text-gray-500 font-bold tracking-[0.2em] text-xs uppercase pl-1">Expert Care</span>
@@ -41,30 +42,26 @@ export default function DoctorsList({ doctors, showView = true }: DoctorsListPro
                                 <span className="text-sm font-semibold text-gray-400 uppercase tracking-wider hidden sm:block">View:</span>
                                 <GridSwitcher currentColumns={columns} onChange={setColumns} />
                             </div>
-                            <Link
-                                href="/doctors"
-                                className="hidden md:flex items-center gap-2 text-black font-semibold hover:text-gray-600 transition-colors group"
-                            >
-                                View All Doctors <Icon icon="solar:arrow-right-linear" className="group-hover:translate-x-1 transition-transform" />
-                            </Link>
                         </div>
                     )}
                 </div>
 
                 <div className={`grid ${getGridColsClass()} gap-8 transition-all duration-500`}>
                     {doctors.map((doctor) => (
-                        <Link 
-                            key={doctor._id} 
+                        <Link
+                            key={doctor._id}
                             href={`/doctors/${doctor._id}`}
                             className={`group bg-white rounded-3xl overflow-hidden border border-black/5 hover:border-black/20 transition-all duration-500 shadow-sm hover:shadow-xl cursor-pointer ${columns === 1 ? 'flex flex-col md:flex-row' : ''}`}
                         >
                             {/* Image Container */}
                             <div className={`relative overflow-hidden ${columns === 1 ? 'h-[320px] md:h-[400px] md:w-1/3 w-full' : 'h-[320px] w-full'}`}>
                                 {doctor.avatar ? (
-                                    <img
+                                    <Image
                                         src={doctor.avatar.url}
                                         alt={doctor.name}
-                                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out"
+                                        fill
+                                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     />
                                 ) : (
                                     <div className="w-full h-full bg-gray-100 flex items-center justify-center">

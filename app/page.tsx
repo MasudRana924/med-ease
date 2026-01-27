@@ -8,6 +8,7 @@ import { NurseService } from "@/lib/nurses/actions";
 import { DoctorService } from "@/lib/doctors/actions";
 import { MedicineService } from "@/lib/medicine/actions";
 import { Icon } from "@iconify/react";
+import Image from "next/image";
 
 export default async function Home() {
   const nursesData = NurseService.getFeatured();
@@ -95,10 +96,12 @@ export default async function Home() {
               </div>
 
               <div className="relative h-[600px] rounded-3xl overflow-hidden shadow-none border border-gray-100">
-                <img
+                <Image
                   src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?q=80&w=1979&auto=format&fit=crop"
                   alt="Pharmacy Services"
-                  className="object-cover w-full h-full grayscale"
+                  fill
+                  className="object-cover grayscale"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
                   <div className="text-white">

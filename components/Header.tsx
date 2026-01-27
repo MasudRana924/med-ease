@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
@@ -56,7 +57,7 @@ export default function Header() {
                 <div className="flex items-center gap-5">
                     <Link href="/cart" className="relative group">
                         <div className="p-2.5 rounded-full hover:bg-gray-100 transition-colors">
-                            <Icon icon="solar:cart-large-2-linear" className="text-xl text-black transition-colors" />
+                            <Icon icon="solar:cart-large-minimalistic-linear" className="text-xl text-black transition-colors" />
                         </div>
                         {cart.length > 0 && (
                             <span className="absolute top-0 right-0 h-5 w-5 bg-black text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-white">
@@ -82,12 +83,14 @@ export default function Header() {
                                 href="/profile"
                                 className="flex items-center gap-2 hover:opacity-70 transition-opacity cursor-pointer group"
                             >
-                                <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                                <div className="relative w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
                                     {user.avatar?.url ? (
-                                        <img
+                                        <Image
                                             src={user.avatar.url}
                                             alt={user.name}
-                                            className="w-full h-full object-cover"
+                                            fill
+                                            className="object-cover"
+                                            sizes="32px"
                                         />
                                     ) : (
                                         <Icon icon="solar:user-circle-linear" className="text-xl text-black" />

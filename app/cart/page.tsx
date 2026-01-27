@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { useCart } from "@/context/CartContext";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import Image from "next/image";
 import Button from "@/components/Button";
 
 export default function CartPage() {
@@ -17,6 +18,15 @@ export default function CartPage() {
         <div className="flex flex-col min-h-screen bg-white text-black">
             <Header />
             <main className="flex-1 container mx-auto px-4 py-8 md:py-16 max-w-6xl">
+                <div className="w-full mb-6">
+                    <Link
+                        href="/"
+                        className="inline-flex items-center gap-2 text-zinc-500 hover:text-black transition-colors group px-4 py-2 "
+                    >
+                        <Icon icon="solar:alt-arrow-left-linear" className="text-xl group-hover:-translate-x-1 transition-transform" />
+                        <span className="font-medium">Back</span>
+                    </Link>
+                </div>
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-100 pb-6">
                     <div>
                         <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2">Shopping Cart</h1>
@@ -45,9 +55,15 @@ export default function CartPage() {
                         <div className="lg:col-span-2 space-y-8">
                             {cart.map((item, index) => (
                                 <div key={`${item._id}-${index}`} className="group flex flex-col sm:flex-row gap-6 items-start sm:items-center py-4 border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors p-4 rounded-2xl">
-                                    <div className="h-24 w-24 bg-gray-50 rounded-xl flex items-center justify-center p-2 flex-shrink-0">
+                                    <div className="relative h-24 w-24 bg-gray-50 rounded-xl flex items-center justify-center p-2 flex-shrink-0">
                                         {item.image ? (
-                                            <img src={item.image} alt={item.name} className="h-full w-full object-contain mix-blend-multiply" />
+                                            <Image
+                                                src={item.image}
+                                                alt={item.name}
+                                                fill
+                                                className="object-contain mix-blend-multiply"
+                                                sizes="96px"
+                                            />
                                         ) : (
                                             <Icon icon="solar:pill-linear" className="text-3xl text-gray-400" />
                                         )}
@@ -68,7 +84,7 @@ export default function CartPage() {
                                             </button>
                                         </div>
                                         <div className="mt-6 flex items-center justify-between">
-                                            <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-xl p-1 shadow-sm">
+                                            <div className="flex items-center gap-1">
                                                 <button
                                                     onClick={() => updateQuantity(item._id, (item.quantity || 1) - 1)}
                                                     className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 rounded-lg transition-colors disabled:opacity-20 disabled:cursor-not-allowed"

@@ -2,6 +2,7 @@
 
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import { Medicine } from "@/types";
 
@@ -16,7 +17,7 @@ export default function MedicineList({ medicines }: MedicineListProps) {
 
     return (
         <section className="py-24 bg-white">
-            <div className="container mx-auto px-4 md:px-6">
+            <div className="w-full lg:w-9/12 mx-auto px-4 md:px-6">
                 <div className="flex items-end justify-between mb-12">
                     <div className="space-y-2">
                         <span className="text-gray-500 font-bold tracking-[0.2em] text-xs uppercase pl-1">Online Pharmacy</span>
@@ -52,7 +53,13 @@ export default function MedicineList({ medicines }: MedicineListProps) {
                                 )}
 
                                 {medicine.image ? (
-                                    <img src={medicine.image.url} alt={medicine.name} className="h-full w-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105" />
+                                    <Image
+                                        src={medicine.image.url}
+                                        alt={medicine.name}
+                                        fill
+                                        className="object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                                    />
                                 ) : (
                                     <Icon icon="solar:medical-kit-linear" className="text-8xl text-gray-200" />
                                 )}

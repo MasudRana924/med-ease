@@ -6,6 +6,7 @@ import AuthGuard from "@/components/guards/AuthGuard";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
 
 import { useState, useEffect } from "react";
 
@@ -38,6 +39,15 @@ export default function CheckoutPage() {
             <div className="flex flex-col min-h-screen bg-white text-black">
                 <Header />
                 <main className="flex-1 container mx-auto px-4 py-8 md:py-16 max-w-6xl">
+                    <div className="w-full mb-6">
+                        <Link
+                            href="/cart"
+                            className="inline-flex items-center gap-2 text-zinc-500 hover:text-black transition-colors group px-4 py-2 "
+                        >
+                            <Icon icon="solar:alt-arrow-left-linear" className="text-xl group-hover:-translate-x-1 transition-transform" />
+                            <span className="font-medium">Back</span>
+                        </Link>
+                    </div>
                     <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-100 pb-6">
                         <div>
                             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2">Checkout</h1>
@@ -123,7 +133,7 @@ export default function CheckoutPage() {
                         <div className="relative">
                             <div className="sticky top-32 p-8 bg-gray-50 rounded-3xl border border-gray-100">
                                 <h3 className="text-2xl font-bold mb-6">Order Summary</h3>
-                                <div className="space-y-4 mb-8 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                                <div className="space-y-4 mb-8 max-h-60 overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                                     {cart.map((item, idx) => (
                                         <div key={`${item._id}-${idx}`} className="flex justify-between items-start gap-4 text-sm">
                                             <div className="flex-1">
