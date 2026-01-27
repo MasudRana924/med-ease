@@ -2,8 +2,6 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
@@ -147,14 +145,8 @@ function SearchableMedicineList() {
 
 export default function MedicinePage() {
     return (
-        <div className="flex flex-col min-h-screen bg-white text-black">
-            <Header />
-            <main className="flex-1">
-                <Suspense fallback={<div className="text-center p-10 text-gray-500">Loading Search...</div>}>
-                    <SearchableMedicineList />
-                </Suspense>
-            </main>
-            <Footer />
-        </div>
+        <Suspense fallback={<div className="text-center p-10 text-gray-500">Loading Search...</div>}>
+            <SearchableMedicineList />
+        </Suspense>
     );
 }

@@ -2,8 +2,6 @@
 "use client";
 
 import { useAuth } from "@/context/AuthContext";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import AuthGuard from "@/components/guards/AuthGuard";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
@@ -180,59 +178,55 @@ export default function ProfilePage() {
 
     return (
         <AuthGuard>
-            <div className="flex flex-col min-h-screen bg-white">
-                <Header />
-                <main className="flex-1 container mx-auto px-4 md:px-6 py-8 md:py-12 max-w-7xl">
-                    <div className="w-full mb-6">
-                        <Link
-                            href="/"
-                            className="inline-flex items-center gap-2 text-zinc-500 hover:text-black transition-colors group px-4 py-2 "
-                        >
-                            <Icon icon="solar:alt-arrow-left-linear" className="text-xl group-hover:-translate-x-1 transition-transform" />
-                            <span className="font-medium">Back</span>
-                        </Link>
-                    </div>
+            <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 max-w-7xl">
+                <div className="w-full mb-6">
+                    <Link
+                        href="/"
+                        className="inline-flex items-center gap-2 text-zinc-500 hover:text-black transition-colors group px-4 py-2 "
+                    >
+                        <Icon icon="solar:alt-arrow-left-linear" className="text-xl group-hover:-translate-x-1 transition-transform" />
+                        <span className="font-medium">Back</span>
+                    </Link>
+                </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                        {/* Sidebar */}
-                        <div className="lg:col-span-1">
-                            <div className="sticky top-24 space-y-8">
-                                <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                                    <div className="space-y-1">
-                                        {sidebarItems.map((item) => (
-                                            <button
-                                                key={item.id}
-                                                onClick={() => setActiveTab(item.id as Tab)}
-                                                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-sm ${activeTab === item.id
-                                                    ? 'text-black font-bold'
-                                                    : 'text-gray-600 font-medium hover:bg-white hover:text-black'
-                                                    }`}
-                                            >
-                                                <Icon icon={item.icon} className="text-xl" />
-                                                {item.label}
-                                            </button>
-                                        ))}
-                                    </div>
-                                    <div className="mt-6 pt-6 border-t border-gray-200/50">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    {/* Sidebar */}
+                    <div className="lg:col-span-1">
+                        <div className="sticky top-24 space-y-8">
+                            <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                                <div className="space-y-1">
+                                    {sidebarItems.map((item) => (
                                         <button
-                                            onClick={logout}
-                                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 transition-colors font-medium text-sm"
+                                            key={item.id}
+                                            onClick={() => setActiveTab(item.id as Tab)}
+                                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-sm ${activeTab === item.id
+                                                ? 'text-black font-bold'
+                                                : 'text-gray-600 font-medium hover:bg-white hover:text-black'
+                                                }`}
                                         >
-                                            <Icon icon="solar:logout-2-linear" className="text-xl" />
-                                            Log Out
+                                            <Icon icon={item.icon} className="text-xl" />
+                                            {item.label}
                                         </button>
-                                    </div>
+                                    ))}
+                                </div>
+                                <div className="mt-6 pt-6 border-t border-gray-200/50">
+                                    <button
+                                        onClick={logout}
+                                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 transition-colors font-medium text-sm"
+                                    >
+                                        <Icon icon="solar:logout-2-linear" className="text-xl" />
+                                        Log Out
+                                    </button>
                                 </div>
                             </div>
                         </div>
-
-                        {/* Content Area */}
-                        <div className="lg:col-span-3">
-                            {renderContent()}
-                        </div>
                     </div>
-                </main>
-                <Footer />
+
+                    {/* Content Area */}
+                    <div className="lg:col-span-3">
+                        {renderContent()}
+                    </div>
+                </div>
             </div>
         </AuthGuard>
     );
