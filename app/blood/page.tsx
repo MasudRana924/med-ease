@@ -30,7 +30,6 @@ export default function BloodPage() {
             donor.name.toLowerCase().includes(searchTerm.toLowerCase());
         return matchGroup && matchSearch;
     });
-
     return (
         <div className="flex flex-col min-h-screen bg-white font-sans text-black">
             {/* Hero Section */}
