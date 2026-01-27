@@ -17,23 +17,35 @@ export default function ReviewForm({ entityId, entityType }: ReviewFormProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (rating === 0) return;
 
         setIsSubmitting(true);
 
-        // Simulate API call
-        setTimeout(() => {
-            setIsSubmitting(false);
-            setIsSuccess(true);
-            setComment("");
-            setName("");
-            setRating(0);
+        try {
+            // Import dynamically to avoid server/client issues if necessary, but here it is a client component
+            const { DoctorService } = await import("@/lib/doctors/actions");
+            const success = await DoctorService.addReview(entityId, {
+                rating,
+                comment,
+                name
+            });
 
-            // Reset success message after 3 seconds
-            setTimeout(() => setIsSuccess(false), 3000);
-        }, 1000);
+            if (success) {
+                setIsSuccess(true);
+                setComment("");
+                setName("");
+                setRating(0);
+                setTimeout(() => setIsSuccess(false), 3000);
+            } else {
+                alert("Failed to submit review. Please try again.");
+            }
+        } catch (error) {
+            console.error("Failed to submit review", error);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (

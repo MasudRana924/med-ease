@@ -33,8 +33,6 @@ export default function BloodPage() {
 
     return (
         <div className="flex flex-col min-h-screen bg-white font-sans text-black">
-            <Header />
-
             {/* Hero Section */}
             <section className="relative w-full h-[500px] flex items-center justify-center bg-black overflow-hidden">
                 <div className="container mx-auto px-4 md:px-6 relative z-10 text-center text-white space-y-8">
@@ -193,8 +191,6 @@ export default function BloodPage() {
                     </button>
                 </div>
             </section>
-
-            <Footer />
         </div>
     );
 }

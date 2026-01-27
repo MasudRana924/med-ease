@@ -3,8 +3,19 @@ import { DoctorService } from "@/lib/doctors/actions";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
-export default async function DoctorsPage() {
-    const doctors = await DoctorService.getAll();
+export default async function DoctorsPage({
+    searchParams,
+}: {
+    searchParams: { [key: string]: string | string[] | undefined };
+}) {
+    const { page, limit, name, work, expert } = await searchParams;
+    const doctors = await DoctorService.getAll({
+        page: Number(page) || 1,
+        limit: Number(limit) || 10,
+        name: name as string,
+        work: work as string,
+        expert: expert as string
+    });
 
     return (
         <>

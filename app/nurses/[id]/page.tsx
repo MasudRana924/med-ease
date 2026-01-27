@@ -25,7 +25,6 @@ export default async function NurseDetailsPage({ params }: NurseDetailsPageProps
 
     return (
         <div className="flex flex-col min-h-screen bg-zinc-50">
-            <Header />
             <main className="flex-1 py-8">
                 {/* Back Button */}
                 <div className="w-full lg:w-9/12 mx-auto px-4 md:px-6 mb-6">
@@ -242,7 +241,6 @@ export default async function NurseDetailsPage({ params }: NurseDetailsPageProps
                     </div>
                 </div>
             </main>
-            <Footer />
         </div>
     );
 }

@@ -66,7 +66,7 @@ export default function MedicineList({ medicines }: MedicineListProps) {
                             </div>
 
                             <div className="flex-1 flex flex-col">
-                                <h3 className="text-lg font-bold text-black leading-tight mb-1">{medicine.name}</h3>
+                                <h3 className="text-lg font-bold text-black leading-tight mb-1"><Link href={`/medicine/${medicine._id}`}>{medicine.name}</Link></h3>
                                 <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">{medicine.company}</p>
 
                                 <div className="mt-auto flex items-center justify-between">

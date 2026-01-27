@@ -9,14 +9,19 @@ interface NurseResponse {
 }
 
 export const NurseService = {
-    getAll: async (): Promise<Nurse[]> => {
+    getAll: async (params: { page?: number; limit?: number; name?: string; work?: string } = {}): Promise<Nurse[]> => {
         try {
-            const response = await api.get("/get/nurses");
-            let data = [];
-            if (Array.isArray(response.data)) {
-                data = response.data;
-            } else if (response.data.nurses) {
-                data = response.data.nurses;
+            const { page = 1, limit = 10, name, work } = params;
+            const queryParams = new URLSearchParams();
+            queryParams.append("page", page.toString());
+            queryParams.append("limit", limit.toString());
+            if (name) queryParams.append("name", name);
+            if (work) queryParams.append("work", work);
+
+            const response = await api.get<{ data: Nurse[] }>(`/api/nurses?${queryParams.toString()}`);
+            let data: Nurse[] = [];
+            if (response.data && Array.isArray(response.data.data)) {
+                data = response.data.data;
             }
             return data;
         } catch (error) {
