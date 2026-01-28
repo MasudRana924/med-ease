@@ -118,9 +118,9 @@ export default function MedicineList({
         </div>
     );
 
-    if (title && subtitle) {
+    if (!showView && title) {
         return (
-            <Section id="medicines">
+            <Section id="medicines" className="border-t border-gray-100">
                 {listContent}
             </Section>
         );

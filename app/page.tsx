@@ -22,7 +22,13 @@ export default async function Home() {
       <Hero />
 
       {/* Medicine List */}
-      <MedicineList medicines={medicines} />
+      <MedicineList
+        medicines={medicines}
+        showView={false}
+        title="Featured Medicines"
+        subtitle="Genuine Products"
+        viewAllLink="/medicine"
+      />
 
       {/* Doctors List */}
       <DoctorsList
