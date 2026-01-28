@@ -11,21 +11,21 @@ const items = [
         title: "Expert Doctors",
         subtitle: "Top Specialists",
         image: "/images/hero/doctor.png",
-        color: "bg-blue-50",
+        color: "bg-gray-100",
     },
     {
         id: "medicine",
         title: "Quality Medicines",
         subtitle: "100% Genuine",
         image: "/images/hero/medicine.png",
-        color: "bg-green-50",
+        color: "bg-gray-100",
     },
     {
         id: "nurse",
         title: "Home Nursing",
         subtitle: "Compassionate Care",
         image: "/images/hero/nurse.png",
-        color: "bg-pink-50",
+        color: "bg-gray-100",
     },
 ];
 
@@ -47,7 +47,7 @@ export default function Hero() {
     const activeItem = items.find((item) => item.id === activeId);
 
     return (
-        <section className="w-full bg-white overflow-hidden py-10 md:py-20">
+        <section className="w-full bg-white overflow-hidden py-10 md:py-20 text-black">
             <div className="container mx-auto px-4 md:px-6">
                 <LayoutGroup>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[500px]">
@@ -60,14 +60,14 @@ export default function Hero() {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.6 }}
                                 >
-                                    <span className="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-600 font-semibold text-sm mb-4">
+                                    <span className="inline-block py-1.5 px-4 rounded-full border border-black text-black font-semibold text-sm mb-4 tracking-wide uppercase">
                                         #1 Healthcare Platform
                                     </span>
-                                    <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+                                    <h1 className="text-4xl md:text-6xl font-bold text-black leading-tight">
                                         Your Health, <br />
-                                        <span className="text-blue-600">Our Priority</span>
+                                        <span className="text-gray-500">Our Priority</span>
                                     </h1>
-                                    <p className="text-lg text-gray-500 max-w-lg pt-4 leading-relaxed">
+                                    <p className="text-lg text-gray-600 max-w-lg pt-4 leading-relaxed font-medium">
                                         Experience the future of healthcare with our integrated platform.
                                         From expert consultations to genuine medicine delivery, we have got you covered.
                                     </p>
@@ -76,13 +76,13 @@ export default function Hero() {
                                 <div className="flex gap-4 pt-4">
                                     <Link
                                         href="/doctors"
-                                        className="px-8 py-3 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition transform hover:scale-105"
+                                        className="px-8 py-3 bg-black text-white rounded-full font-bold uppercase tracking-wider hover:bg-gray-800 transition transform hover:scale-105"
                                     >
                                         Book Appointment
                                     </Link>
                                     <Link
                                         href="/medicine"
-                                        className="px-8 py-3 bg-white border border-gray-200 text-gray-700 rounded-full font-medium hover:bg-gray-50 transition"
+                                        className="px-8 py-3 bg-white border-2 border-black text-black rounded-full font-bold uppercase tracking-wider hover:bg-gray-100 transition"
                                     >
                                         Order Medicine
                                     </Link>
@@ -91,20 +91,20 @@ export default function Hero() {
 
                             {/* The List of Items (Left Side) */}
                             <div className="mt-8">
-                                <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6">
+                                <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">
                                     Our Core Services
                                 </p>
                                 <div className="flex gap-4 md:gap-8">
                                     {items.map((item) => (
                                         <div
                                             key={item.id}
-                                            className="relative w-24 h-24 md:w-32 md:h-32 flex items-center justify-center rounded-2xl bg-gray-50 border border-gray-100 p-2"
+                                            className="relative w-24 h-24 md:w-32 md:h-32 flex items-center justify-center rounded-full  border border-gray-50 "
                                         >
                                             {/* If the item is NOT active, show it here */}
                                             {activeId !== item.id && (
                                                 <motion.div
                                                     layoutId={`hero-image-${item.id}`}
-                                                    className="relative w-full h-full"
+                                                    className="relative w-full h-full rounded-full overflow-hidden"
                                                     transition={{
                                                         type: "spring",
                                                         stiffness: 350,
@@ -115,14 +115,14 @@ export default function Hero() {
                                                         src={item.image}
                                                         alt={item.title}
                                                         fill
-                                                        className="object-contain"
+                                                        className="object-contain p-1"
                                                     />
                                                 </motion.div>
                                             )}
 
                                             {/* Placeholder text/content when image leaves */}
-                                            <div className="absolute inset-0 flex flex-col items-center justify-end pb-2 opacity-50 z-0">
-                                                <span className="text-[10px] font-bold text-gray-400 uppercase">{item.id}</span>
+                                            <div className="absolute inset-0 flex flex-col items-center justify-center opacity-50 z-0">
+                                                <span className="text-[10px] font-bold text-gray-300 uppercase tracking-widest">{item.id}</span>
                                             </div>
                                         </div>
                                     ))}
@@ -133,8 +133,7 @@ export default function Hero() {
                         {/* Right Side: Featured Display Area */}
                         <div className="relative h-[400px] md:h-[600px] w-full flex items-center justify-center order-1 lg:order-2">
                             {/* Background Decor */}
-                            <div className={`absolute inset-0 rounded-[3rem] ${activeItem?.color} transition-colors duration-500 -z-10 transform rotate-3 scale-95 opacity-60`}></div>
-                            <div className={`absolute inset-0 rounded-[3rem] bg-gray-50 -z-20`}></div>
+                            <div className={`absolute w-[350px] h-[350px] md:w-[600px] md:h-[600px] rounded-full bg-gray-100 transition-colors duration-500 -z-10`}></div>
 
                             {/* The Active Item Display */}
                             <AnimatePresence mode="popLayout">
@@ -144,28 +143,29 @@ export default function Hero() {
                                         <motion.div
                                             key={item.id}
                                             layoutId={`hero-image-${item.id}`}
-                                            className="relative w-64 h-64 md:w-96 md:h-96"
+                                            className="relative w-80 h-80 md:w-[500px] md:h-[500px] rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden"
                                             transition={{
                                                 type: "spring",
                                                 stiffness: 350,
                                                 damping: 30,
                                             }}
                                         >
-                                            <Image
-                                                src={item.image}
-                                                alt={item.title}
-                                                fill
-                                                className="object-contain drop-shadow-2xl"
-                                                priority
-                                            />
+                                            <div className="relative w-[85%] h-[85%]">
+                                                <Image
+                                                    src={item.image}
+                                                    alt={item.title}
+                                                    fill
+                                                    className="object-contain"
+                                                    priority
+                                                />
+                                            </div>
+
                                             <motion.div
                                                 initial={{ opacity: 0, y: 20 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 exit={{ opacity: 0, y: -20 }}
-                                                className="absolute -bottom-16 left-0 right-0 text-center"
+                                                className="absolute bottom-8 left-0 right-0 text-center z-10"
                                             >
-                                                <h3 className="text-3xl font-bold text-gray-800">{item.title}</h3>
-                                                <p className="text-gray-600">{item.subtitle}</p>
                                             </motion.div>
                                         </motion.div>
                                     )
