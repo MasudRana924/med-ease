@@ -20,7 +20,7 @@ export default function ListingHeader({
     children
 }: ListingHeaderProps) {
     return (
-        <div className={`flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-gray-100 pb-6 ${className}`}>
+        <div className={`flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 ${className}`}>
             <div className="space-y-2">
                 {subtitle && (
                     <span className="text-gray-400 font-bold tracking-[0.2em] text-[10px] uppercase pl-1">

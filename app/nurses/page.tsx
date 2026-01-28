@@ -41,10 +41,13 @@ export default async function NursesPage({
             />
 
             <div className="container mx-auto px-4">
-                <NurseSearch initialName={name} initialWork={work} />
-
                 <Suspense fallback={<ListSkeleton count={8} />}>
-                    <NursesList nurses={nurses} />
+                    <NursesList
+                        nurses={nurses}
+                        showSearch={true}
+                        initialName={name}
+                        initialWork={work}
+                    />
                 </Suspense>
             </div>
         </div>

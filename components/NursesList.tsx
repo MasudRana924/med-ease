@@ -30,7 +30,7 @@ export default function NursesList({
     if (loading) {
         return (
             <div id="nurses" className="w-full">
-                <div className="flex items-center justify-between w-full pb-4 mb-8 border-b border-gray-100">
+                <div className="flex items-center justify-between w-full pb-4 mb-8">
                     <div className="space-y-3">
                         <div className="h-3 bg-gray-100 rounded-full w-24 animate-pulse" />
                         <div className="h-8 bg-gray-100 rounded-full w-64 animate-pulse" />
@@ -84,14 +84,14 @@ export default function NursesList({
 
             <div className={`grid ${getGridColsClass()} gap-8 transition-all duration-500`}>
                 {nurses.map((nurse) => (
-                    <div key={nurse._id} className={`bg-white rounded-2xl p-4 flex flex-col transition-all duration-300 border border-transparent hover:border-black/5 hover:shadow-xl ${columns === 1 ? 'sm:flex-row sm:items-center sm:gap-8' : ''}`}>
+                    <div key={nurse._id} className={`bg-white rounded-2xl p-4 flex flex-col transition-all duration-300 hover:shadow-xl ${columns === 1 ? 'sm:flex-row sm:items-center sm:gap-8' : ''}`}>
                         <Link href={`/nurses/${nurse._id}`} className={`relative rounded-xl bg-gray-50 overflow-hidden flex items-center justify-center cursor-pointer ${columns === 1 ? 'h-64 w-full sm:w-80 mb-0' : 'h-64 w-full mb-4'}`}>
                             {nurse.images && nurse.images[0] ? (
                                 <Image
                                     src={nurse.images[0].url}
                                     alt={nurse.name}
                                     fill
-                                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                    className="object-cover transition-transform duration-500"
                                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                                 />
                             ) : (
@@ -149,7 +149,7 @@ export default function NursesList({
 
     if (!showView && title) {
         return (
-            <section className="py-24 bg-white border-t border-gray-100">
+            <section className="py-24 bg-white">
                 <div className="container mx-auto px-4 md:px-6">
                     {content}
                 </div>

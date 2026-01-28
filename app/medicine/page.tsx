@@ -41,12 +41,12 @@ export default async function MedicinePage({
             />
 
             <div className="container mx-auto px-4">
-                <div className="mb-12">
-                    <MedicineSearch initialSearch={name} />
-                </div>
-
                 <Suspense fallback={<ListSkeleton count={8} />}>
-                    <MedicineList medicines={medicines} />
+                    <MedicineList
+                        medicines={medicines}
+                        showSearch={true}
+                        initialSearch={name}
+                    />
                 </Suspense>
             </div>
         </div>

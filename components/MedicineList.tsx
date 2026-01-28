@@ -62,7 +62,7 @@ export default function MedicineList({
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {medicines.map((medicine) => (
-                        <div key={medicine._id} className="bg-white rounded-2xl p-4 flex flex-col transition-all duration-300 border border-transparent hover:border-black/5 hover:shadow-xl group">
+                        <div key={medicine._id} className="bg-white rounded-2xl p-4 flex flex-col transition-all duration-300 hover:shadow-xl group">
                             <Link href={`/medicine/${medicine._id}`} className="relative rounded-xl bg-gray-50 overflow-hidden h-64 w-full mb-4 flex items-center justify-center p-8">
                                 <button
                                     onClick={(e) => {
@@ -79,7 +79,7 @@ export default function MedicineList({
                                         src={medicine.image.url}
                                         alt={medicine.name}
                                         fill
-                                        className="object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
+                                        className="object-contain mix-blend-multiply transition-transform duration-500"
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                                     />
                                 ) : (
@@ -96,7 +96,7 @@ export default function MedicineList({
                                     <p className="text-xs text-gray-400 uppercase tracking-wide">{medicine.company}</p>
                                 </div>
 
-                                <div className="mt-auto pt-4 flex items-center justify-between border-t border-gray-50 mt-4">
+                                <div className="mt-auto pt-4 flex items-center justify-between mt-4">
                                     <div className="flex items-baseline gap-0.5">
                                         <span className="text-sm font-medium text-gray-500">$</span>
                                         <span className="text-2xl font-bold text-black">{medicine.price}</span>

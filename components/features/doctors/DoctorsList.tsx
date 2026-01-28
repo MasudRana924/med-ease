@@ -42,7 +42,16 @@ export default function DoctorsList({
         );
     }
 
-    if (!doctors || doctors.length === 0) return null;
+    if (!doctors || doctors.length === 0) {
+        if (title) return null; // If it's a section, hide it
+        return (
+            <div className="text-center py-20 bg-gray-50 rounded-3xl w-full">
+                <Icon icon="solar:user-block-linear" className="text-6xl text-gray-300 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-black">No doctors found</h3>
+                <p className="text-gray-500">Try adjusting your search terms</p>
+            </div>
+        );
+    }
 
     const getGridColsClass = () => {
         switch (columns) {
@@ -100,7 +109,7 @@ export default function DoctorsList({
 
     if (!showView && title) {
         return (
-            <Section className="border-t border-gray-100">
+            <Section>
                 {listContent}
             </Section>
         );

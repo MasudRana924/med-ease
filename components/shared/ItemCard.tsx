@@ -57,7 +57,7 @@ export default function ItemCard({
                         src={image}
                         alt={title}
                         fill
-                        className="object-cover transition-transform duration-500 group-hover/img:scale-110"
+                        className="object-cover transition-transform duration-500"
                         sizes="(max-width: 640px) 100vw, 30vw"
                     />
                 ) : (
@@ -97,8 +97,7 @@ export default function ItemCard({
                     )}
                 </div>
 
-                {/* Footer Section */}
-                <div className={`flex items-center justify-between pt-4 ${horizontal ? 'mt-4 border-t border-gray-50' : 'mt-auto pt-4 border-t border-gray-50 mt-4'
+                <div className={`flex items-center justify-between pt-4 ${horizontal ? 'mt-4' : 'mt-auto pt-4 mt-4'
                     }`}>
                     {price !== undefined && (
                         <PriceDisplay amount={price} unit={priceUnit} size={horizontal ? "lg" : "md"} />

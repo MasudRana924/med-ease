@@ -6,6 +6,7 @@ import { Nurse } from "@/types";
 import GridSwitcher from "@/components/shared/GridSwitcher";
 import { ListSkeleton } from "@/components/shared/Skeleton";
 import ItemCard from "@/components/shared/ItemCard";
+import NurseSearch from "./NurseSearch";
 import ListingHeader from "@/components/shared/ListingHeader";
 import { Section } from "@/components/ui";
 
@@ -16,6 +17,9 @@ interface NursesListProps {
     subtitle?: string;
     viewAllLink?: string;
     loading?: boolean;
+    showSearch?: boolean;
+    initialName?: string;
+    initialWork?: string;
 }
 
 export default function NursesList({
@@ -24,7 +28,10 @@ export default function NursesList({
     title,
     subtitle,
     viewAllLink,
-    loading = false
+    loading = false,
+    showSearch = false,
+    initialName = "",
+    initialWork = ""
 }: NursesListProps) {
     const [columns, setColumns] = useState(4);
 
@@ -37,7 +44,16 @@ export default function NursesList({
         );
     }
 
-    if (!nurses || nurses.length === 0) return null;
+    if (!nurses || nurses.length === 0) {
+        if (title) return null; // If it's a section, hide it
+        return (
+            <div className="text-center py-20 bg-gray-50 rounded-3xl w-full">
+                <Icon icon="solar:user-block-linear" className="text-6xl text-gray-300 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-black">No nurses found</h3>
+                <p className="text-gray-500">Try adjusting your search terms</p>
+            </div>
+        );
+    }
 
     const getGridColsClass = () => {
         switch (columns) {
@@ -57,12 +73,19 @@ export default function NursesList({
                     subtitle={subtitle || "Health Care"}
                     viewAllLink={viewAllLink}
                 >
-                    {showView && (
-                        <div className="hidden sm:flex items-center gap-4">
-                            <span className="text-sm font-semibold text-gray-400 uppercase tracking-wider">GridView:</span>
-                            <GridSwitcher currentColumns={columns} onChange={setColumns} />
-                        </div>
-                    )}
+                    <div className="flex items-center gap-4">
+                        {showSearch && (
+                            <div className="flex-grow max-w-xs">
+                                <NurseSearch variant="minimal" initialName={initialName} initialWork={initialWork} />
+                            </div>
+                        )}
+                        {showView && (
+                            <div className="hidden sm:flex items-center gap-4">
+                                <span className="text-sm font-semibold text-gray-400 uppercase tracking-wider">GridView:</span>
+                                <GridSwitcher currentColumns={columns} onChange={setColumns} />
+                            </div>
+                        )}
+                    </div>
                 </ListingHeader>
             )}
 
@@ -95,7 +118,7 @@ export default function NursesList({
 
     if (!showView && title) {
         return (
-            <Section className="border-t border-gray-100">
+            <Section>
                 {listContent}
             </Section>
         );

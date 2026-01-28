@@ -6,10 +6,12 @@ import { Icon } from "@iconify/react";
 
 export default function NurseSearch({
     initialName = "",
-    initialWork = ""
+    initialWork = "",
+    variant = "hero"
 }: {
     initialName?: string;
     initialWork?: string;
+    variant?: "hero" | "minimal";
 }) {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -26,11 +28,6 @@ export default function NurseSearch({
             if (work) params.set("work", work);
             else params.delete("work");
 
-            // Reset page on search change
-            if (name !== initialName || work !== initialWork) {
-                // params.set("page", "1"); // Optional, but good practice
-            }
-
             const newSearch = params.toString();
             if (newSearch !== searchParams.toString()) {
                 router.push(`?${newSearch}`, { scroll: false });
@@ -39,6 +36,21 @@ export default function NurseSearch({
 
         return () => clearTimeout(timer);
     }, [name, work, router, searchParams]);
+
+    if (variant === "minimal") {
+        return (
+            <div className="relative w-full max-w-xs">
+                <Icon icon="solar:user-rounded-linear" className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm" />
+                <input
+                    type="text"
+                    placeholder="Search nurses..."
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2.5 rounded-full border border-gray-100 focus:outline-none focus:ring-2 focus:ring-black transition-all bg-gray-50/50 text-black placeholder:text-gray-400 text-sm font-medium"
+                />
+            </div>
+        );
+    }
 
     return (
         <div className="relative w-full max-w-3xl mx-auto -mt-24 z-20 mb-20">

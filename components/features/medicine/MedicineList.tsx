@@ -9,6 +9,7 @@ import GridSwitcher from "@/components/shared/GridSwitcher";
 import ListingHeader from "@/components/shared/ListingHeader";
 import ItemCard from "@/components/shared/ItemCard";
 import { ListSkeleton } from "@/components/shared/Skeleton";
+import MedicineSearch from "./MedicineSearch";
 
 interface MedicineListProps {
     medicines: Medicine[];
@@ -17,6 +18,8 @@ interface MedicineListProps {
     subtitle?: string;
     viewAllLink?: string;
     loading?: boolean;
+    showSearch?: boolean;
+    initialSearch?: string;
 }
 
 export default function MedicineList({
@@ -25,7 +28,9 @@ export default function MedicineList({
     title,
     subtitle,
     viewAllLink,
-    loading = false
+    loading = false,
+    showSearch = false,
+    initialSearch = ""
 }: MedicineListProps) {
     const { addToCart, addToWishlist, isInWishlist } = useCart();
     const [columns, setColumns] = useState(4);
@@ -68,12 +73,19 @@ export default function MedicineList({
                     subtitle={subtitle || "Catalogue"}
                     viewAllLink={viewAllLink}
                 >
-                    {showView && (
-                        <div className="flex items-center gap-4">
-                            <span className="text-sm font-semibold text-gray-400 uppercase tracking-wider hidden sm:block">View:</span>
-                            <GridSwitcher currentColumns={columns} onChange={setColumns} />
-                        </div>
-                    )}
+                    <div className="flex items-center gap-4">
+                        {showSearch && (
+                            <div className="flex-grow max-w-xs">
+                                <MedicineSearch variant="minimal" initialSearch={initialSearch} />
+                            </div>
+                        )}
+                        {showView && (
+                            <div className="flex items-center gap-4">
+                                <span className="text-sm font-semibold text-gray-400 uppercase tracking-wider hidden sm:block">View:</span>
+                                <GridSwitcher currentColumns={columns} onChange={setColumns} />
+                            </div>
+                        )}
+                    </div>
                 </ListingHeader>
             )}
 
@@ -120,7 +132,7 @@ export default function MedicineList({
 
     if (!showView && title) {
         return (
-            <Section id="medicines" className="border-t border-gray-100">
+            <Section id="medicines">
                 {listContent}
             </Section>
         );
