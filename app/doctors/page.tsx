@@ -1,13 +1,19 @@
+import { Metadata } from "next";
 import DoctorsList from "@/components/features/doctors/DoctorsList";
 import { DoctorService } from "@/lib/doctors/actions";
 import PageHero from "@/components/shared/PageHero";
 
-export const revalidate = 60;
+export const revalidate = 3600;
+
+export const metadata: Metadata = {
+    title: "Doctors - MedEase",
+    description: "Expert medical specialists provided by MedEase.",
+};
 
 export default async function DoctorsPage({
     searchParams,
 }: {
-    searchParams: { [key: string]: string | string[] | undefined };
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
     const params = await searchParams;
     const page = Number(params.page) || 1;
@@ -34,8 +40,6 @@ export default async function DoctorsPage({
             />
 
             <div className="container mx-auto px-4">
-
-
                 <DoctorsList doctors={doctors} />
             </div>
         </div>

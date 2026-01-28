@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     try {
         // Get paths from request body
         const body = await request.json();
-        const paths = body.paths || ['/nurses']; // Default to nurses if no paths provided
+        const paths = body.paths || ['/nurses', '/doctors', '/medicines']; // Default to nurses if no paths provided
 
         // Revalidate each path
         paths.forEach((path: string) => {
