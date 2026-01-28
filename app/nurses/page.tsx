@@ -6,23 +6,20 @@ import { Icon } from "@iconify/react";
 import NursesList from "@/components/NursesList";
 import { NurseService } from "@/lib/nurses/actions";
 import { Nurse } from "@/types";
+import PageHero from "@/components/PageHero";
 
 function SearchableNursesList() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    // Parse initial state from URL
     const initialName = searchParams.get("name") || "";
     const initialWork = searchParams.get("work") || "";
 
     const [nurses, setNurses] = useState<Nurse[]>([]);
     const [loading, setLoading] = useState(true);
-
-    // State for Search Inputs
     const [name, setName] = useState(initialName);
     const [work, setWork] = useState(initialWork);
 
-    // Sync state with URL (Debounced)
     useEffect(() => {
         const timer = setTimeout(() => {
             const params = new URLSearchParams(searchParams.toString());
@@ -34,7 +31,6 @@ function SearchableNursesList() {
             else params.delete("work");
 
             const newSearch = params.toString();
-            // Only push if the query string has effectively changed
             if (newSearch !== searchParams.toString()) {
                 router.push(`?${newSearch}`, { scroll: false });
             }
@@ -43,7 +39,6 @@ function SearchableNursesList() {
         return () => clearTimeout(timer);
     }, [name, work, router, searchParams]);
 
-    // Fetch data when URL Params change
     useEffect(() => {
         const fetchNurses = async () => {
             setLoading(true);
@@ -66,16 +61,18 @@ function SearchableNursesList() {
     }, [searchParams]);
 
     return (
-        <>
-            <section className="bg-primary/5 py-12 text-center">
-                <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Dedicated Nurses</h1>
-                <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto px-4 mb-8">
-                    Professional nursing care services available at your convenience.
-                </p>
+        <div className="pb-20">
+            <PageHero
+                title="Compassionate Care at Your Doorstep"
+                description="Our certified nursing professionals provide dedicated care and assistance tailored to your specific medical needs."
+                image="/images/nurse-hero.png"
+                icon="solar:heart-pulse-bold"
+            />
 
-                {/* Search Inputs */}
-                <div className="container mx-auto px-4 max-w-2xl">
-                    <div className="flex flex-col md:flex-row gap-4">
+            <div className="container mx-auto px-4">
+                <div className="relative w-full max-w-3xl mx-auto -mt-24 z-20 mb-20">
+                    <div className="absolute inset-0 bg-white/20 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/30 -m-4" />
+                    <div className="relative flex flex-col md:flex-row gap-4 p-2 bg-white rounded-xl shadow-xl">
                         <div className="relative flex-1">
                             <Icon icon="solar:user-rounded-linear" className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
                             <input
@@ -83,9 +80,10 @@ function SearchableNursesList() {
                                 placeholder="Search by name..."
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
+                                className="w-full pl-10 pr-4 py-4 rounded-lg border-none focus:ring-0 text-black placeholder:text-gray-400 font-medium"
                             />
                         </div>
+                        <div className="hidden md:block w-px h-8 bg-gray-100 self-center" />
                         <div className="relative flex-1">
                             <Icon icon="solar:hospital-linear" className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
                             <input
@@ -93,22 +91,22 @@ function SearchableNursesList() {
                                 placeholder="Search by hospital/work..."
                                 value={work}
                                 onChange={(e) => setWork(e.target.value)}
-                                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
+                                className="w-full pl-10 pr-4 py-4 rounded-lg border-none focus:ring-0 text-black placeholder:text-gray-400 font-medium"
                             />
                         </div>
                     </div>
                 </div>
-            </section>
 
-            {loading ? (
-                <div className="text-center py-20 flex flex-col items-center gap-2">
-                    <Icon icon="eos-icons:loading" className="text-4xl text-black animate-spin" />
-                    <p className="text-gray-500">Searching nurses...</p>
-                </div>
-            ) : (
-                <NursesList nurses={nurses} />
-            )}
-        </>
+                {loading ? (
+                    <div className="text-center py-20 flex flex-col items-center gap-2">
+                        <Icon icon="eos-icons:loading" className="text-4xl text-black animate-spin" />
+                        <p className="text-gray-500">Searching nurses...</p>
+                    </div>
+                ) : (
+                    <NursesList nurses={nurses} />
+                )}
+            </div>
+        </div>
     );
 }
 

@@ -1,31 +1,43 @@
 import DoctorsList from "@/components/DoctorsList";
 import { DoctorService } from "@/lib/doctors/actions";
+import PageHero from "@/components/PageHero";
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const revalidate = 60;
 
 export default async function DoctorsPage({
     searchParams,
 }: {
     searchParams: { [key: string]: string | string[] | undefined };
 }) {
-    const { page, limit, name, work, expert } = await searchParams;
+    const params = await searchParams;
+    const page = Number(params.page) || 1;
+    const limit = Number(params.limit) || 10;
+    const name = params.name as string;
+    const work = params.work as string;
+    const expert = params.expert as string;
+
     const doctors = await DoctorService.getAll({
-        page: Number(page) || 1,
-        limit: Number(limit) || 10,
-        name: name as string,
-        work: work as string,
-        expert: expert as string
+        page,
+        limit,
+        name,
+        work,
+        expert
     });
 
     return (
-        <>
-            <section className="bg-primary/5 py-12 text-center">
-                <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Expert Doctors</h1>
-                <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto px-4">
-                    Professional medical care services from certified specialists.
-                </p>
-            </section>
-            <DoctorsList doctors={doctors} />
-        </>
+        <div className="pb-20">
+            <PageHero
+                title="Expert Medical Specialists"
+                description="Consult with our team of world-class doctors and specialists dedicated to providing you with the best medical care."
+                image="/images/doctor-hero.png"
+                icon="solar:stethoscope-bold"
+            />
+
+            <div className="container mx-auto px-4">
+
+
+                <DoctorsList doctors={doctors} />
+            </div>
+        </div>
     );
 }

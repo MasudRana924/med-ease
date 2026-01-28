@@ -83,7 +83,7 @@ export default function Header() {
                                 href="/profile"
                                 className="flex items-center gap-2 hover:opacity-70 transition-opacity cursor-pointer group"
                             >
-                                <div className="relative w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                                <div className="relative w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border border-gray-100">
                                     {user.avatar?.url ? (
                                         <Image
                                             src={user.avatar.url}
@@ -96,16 +96,7 @@ export default function Header() {
                                         <Icon icon="solar:user-circle-linear" className="text-xl text-black" />
                                     )}
                                 </div>
-                                <span className="text-sm font-semibold hidden md:block text-black group-hover:underline">
-                                    {user.name}
-                                </span>
                             </Link>
-                            <button
-                                onClick={logout}
-                                className="text-xs text-black hover:text-gray-600 font-medium uppercase tracking-wider ml-2"
-                            >
-                                Logout
-                            </button>
                         </div>
                     ) : (
                         <Link href="/auth/login">

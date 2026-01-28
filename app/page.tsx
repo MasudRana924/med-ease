@@ -23,13 +23,25 @@ export default async function Home() {
       <MedicineList medicines={medicines} />
 
       {/* Doctors List */}
-      <DoctorsList doctors={doctors} showView={false} />
+      <DoctorsList
+        doctors={doctors}
+        showView={false}
+        title="Our Expert Doctors"
+        subtitle="Medical Specialists"
+        viewAllLink="/doctors"
+      />
 
-      {/* Nurses List - Reusing MedicineList-like structure or ensuring NursesList is styled similarly */}
-      <NursesList nurses={nurses} showView={false} />
+      {/* Nurses List */}
+      <NursesList
+        nurses={nurses}
+        showView={false}
+        title="Compassionate Nurses"
+        subtitle="Dedicated Care"
+        viewAllLink="/nurses"
+      />
 
       {/* Medicine Services at a Glance */}
-      <section className="py-20 bg-white border-b border-gray-100">
+      <section className="py-20 bg-white ">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-black mb-4 tracking-tight">Medicine Services at a Glance</h2>
