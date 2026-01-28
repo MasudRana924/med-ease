@@ -7,6 +7,7 @@ import NursesList from "@/components/NursesList";
 import { NurseService } from "@/lib/nurses/actions";
 import { Nurse } from "@/types";
 import PageHero from "@/components/PageHero";
+import { ListSkeleton } from "@/components/Skeleton";
 
 function SearchableNursesList() {
     const router = useRouter();
@@ -98,10 +99,7 @@ function SearchableNursesList() {
                 </div>
 
                 {loading ? (
-                    <div className="text-center py-20 flex flex-col items-center gap-2">
-                        <Icon icon="eos-icons:loading" className="text-4xl text-black animate-spin" />
-                        <p className="text-gray-500">Searching nurses...</p>
-                    </div>
+                    <ListSkeleton />
                 ) : (
                     <NursesList nurses={nurses} />
                 )}

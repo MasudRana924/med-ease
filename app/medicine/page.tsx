@@ -9,6 +9,7 @@ import { useCart } from "@/context/CartContext";
 import { MedicineService } from "@/lib/medicine/actions";
 import { Medicine } from "@/types";
 import GridSwitcher from "@/components/GridSwitcher";
+import { ListSkeleton } from "@/components/Skeleton";
 import PageHero from "@/components/PageHero";
 
 function SearchableMedicineList() {
@@ -107,10 +108,7 @@ function SearchableMedicineList() {
                 </div>
 
                 {loading ? (
-                    <div className="text-center py-20 flex flex-col items-center gap-2">
-                        <Icon icon="eos-icons:loading" className="text-4xl text-black animate-spin" />
-                        <p className="text-gray-500">Searching medicines...</p>
-                    </div>
+                    <ListSkeleton columns={columns} />
                 ) : medicines.length > 0 ? (
                     <div className={`grid ${getGridColsClass()} gap-8 transition-all duration-500`}>
                         {medicines.map((medicine) => (

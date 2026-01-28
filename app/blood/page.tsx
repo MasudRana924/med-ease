@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import Button from "@/components/Button";
+import PageHero from "@/components/PageHero";
 
 // Mock Data
 const donors = [
@@ -30,72 +31,41 @@ export default function BloodPage() {
             donor.name.toLowerCase().includes(searchTerm.toLowerCase());
         return matchGroup && matchSearch;
     });
+
     return (
-        <div className="flex flex-col min-h-screen bg-white font-sans text-black">
-            {/* Hero Section */}
-            <section className="relative w-full h-[500px] flex items-center justify-center bg-black overflow-hidden">
-                <div className="container mx-auto px-4 md:px-6 relative z-10 text-center text-white space-y-8">
-                    <div className="inline-flex items-center gap-2 border border-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
-                        <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-                        </span>
-                        Live Blood Network
-                    </div>
+        <div className="flex flex-col min-h-screen bg-white">
+            <PageHero
+                title="Gifting Life Through Blood"
+                description="Join our network of donors and banks to ensure every patient gets the lifeline they need at the right time."
+                image="/images/blood-hero.png"
+                icon="solar:heart-bold"
+            />
 
-                    <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-none mb-4">
-                        <span className="block text-gray-400 text-2xl md:text-3xl font-medium mb-2 tracking-[0.2em] uppercase">Lifeline</span>
-                        BLOOD BANK
-                    </h1>
-
-                    <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
-                        Connecting donors with patients in real-time. Secure, fast, and reliable lifesaving network.
-                    </p>
-
-                    {/* Quick Stats Strip */}
-                    <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto mt-12 border-t border-white/20 pt-8">
-                        <div className="text-center">
-                            <div className="text-3xl font-bold">1.2k+</div>
-                            <div className="text-xs text-gray-500 uppercase tracking-wider">Donors</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="text-3xl font-bold">50+</div>
-                            <div className="text-xs text-gray-500 uppercase tracking-wider">Banks</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="text-3xl font-bold">24/7</div>
-                            <div className="text-xs text-gray-500 uppercase tracking-wider">Support</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <main className="flex-1 container mx-auto px-4 md:px-6 -mt-16 relative z-20 pb-20">
-
-                {/* Filters */}
-                <div className="bg-white rounded-[2rem] p-8 mb-16 border border-black/5 shadow-xl shadow-black/5">
-                    <div className="flex flex-col lg:flex-row gap-8 items-center">
-
+            <main className="flex-1 container mx-auto px-4 md:px-6 pb-20">
+                {/* Search & Filters Section */}
+                <div className="relative w-full max-w-4xl mx-auto -mt-24 z-20 mb-20">
+                    <div className="absolute inset-0 bg-white/20 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/30 -m-4" />
+                    <div className="relative bg-white rounded-xl shadow-xl p-4 flex flex-col gap-6">
                         {/* Blood Group Selection */}
-                        <div className="w-full lg:w-auto flex-1">
-                            <label className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 block">Select Blood Group</label>
+                        <div className="w-full">
+                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 block pl-2">Filter by Blood Group</label>
                             <div className="flex flex-wrap gap-2">
                                 <button
                                     onClick={() => setSelectedGroup("")}
-                                    className={`h-10 px-6 rounded-full text-sm font-bold transition-all duration-300 ${selectedGroup === ""
-                                        ? "bg-black text-white"
-                                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                    className={`h-9 px-5 rounded-lg text-xs font-bold transition-all duration-300 ${selectedGroup === ""
+                                        ? "bg-black text-white shadow-lg shadow-black/20"
+                                        : "bg-gray-50 text-gray-500 hover:bg-gray-100"
                                         }`}
                                 >
-                                    All
+                                    ALL GROUPS
                                 </button>
                                 {bloodGroups.map(bg => (
                                     <button
                                         key={bg}
                                         onClick={() => setSelectedGroup(selectedGroup === bg ? "" : bg)}
-                                        className={`h-10 w-10 rounded-full text-sm font-bold transition-all duration-300 ${selectedGroup === bg
-                                            ? "bg-black text-white"
-                                            : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-black"
+                                        className={`h-9 w-12 rounded-lg text-xs font-bold transition-all duration-300 ${selectedGroup === bg
+                                            ? "bg-black text-white shadow-lg shadow-black/20"
+                                            : "bg-gray-50 text-gray-500 hover:bg-gray-100"
                                             }`}
                                     >
                                         {bg}
@@ -104,88 +74,87 @@ export default function BloodPage() {
                             </div>
                         </div>
 
+                        <div className="h-px bg-gray-100 w-full" />
+
                         {/* Search Input */}
-                        <div className="w-full lg:w-[400px]">
-                            <label className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 block">Search Location</label>
-                            <div className="relative group">
-                                <Icon icon="lucide:search" className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
-                                <input
-                                    type="text"
-                                    placeholder="e.g. Dhanmondi, Dhaka"
-                                    className="w-full pl-14 pr-6 py-3 rounded-full bg-gray-50 border border-transparent focus:border-black focus:bg-white focus:outline-none transition-all font-medium text-black placeholder:text-gray-400"
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                />
-                            </div>
+                        <div className="relative group">
+                            <Icon icon="solar:magnifer-linear" className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
+                            <input
+                                type="text"
+                                placeholder="Search by name or location (e.g. Dhanmondi, Dhaka)..."
+                                className="w-full pl-12 pr-6 py-4 rounded-xl bg-gray-50 border-none focus:outline-none focus:ring-2 focus:ring-black transition-all font-medium text-black placeholder:text-gray-400"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
                         </div>
                     </div>
                 </div>
 
                 {/* Results Header */}
-                <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-2xl font-bold text-black flex items-center gap-3">
-                        <span className="w-2 h-8 bg-black rounded-full inline-block"></span>
-                        Available Donors
-                        <span className="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full">{filteredDonors.length} found</span>
-                    </h2>
+                <div className="flex items-center justify-between mb-8 border-b border-gray-100 pb-6">
+                    <div>
+                        <p className="text-gray-400 text-sm uppercase tracking-widest font-bold">Lifeline Network</p>
+                        <h2 className="text-2xl font-bold text-black">{filteredDonors.length} Donors & Banks Available</h2>
+                    </div>
                 </div>
 
                 {/* Donors Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                     {filteredDonors.map(donor => (
-                        <div key={donor.id} className="group bg-white rounded-3xl p-6 border border-black/5 hover:border-black/20 transition-all duration-300">
+                        <div key={donor.id} className="group bg-white rounded-2xl p-4 flex flex-col transition-all duration-300 border border-transparent hover:border-black/5 hover:shadow-xl">
 
-                            <div className="flex items-start justify-between mb-6">
-                                <div className={`h-14 w-14 rounded-2xl flex items-center justify-center text-2xl border ${donor.type === "Bank"
-                                    ? "bg-gray-50 border-gray-200 text-gray-700"
-                                    : "bg-white border-black text-black"
-                                    }`}>
-                                    <Icon icon={donor.type === "Bank" ? "mdi:bank-outline" : "mdi:account-heart-outline"} />
-                                </div>
-                                <div className={`h-10 px-3 flex items-center justify-center rounded-xl font-bold text-sm bg-black text-white`}>
+                            {/* Card Header Illustration/Icon container */}
+                            <div className="relative rounded-xl bg-gray-50 overflow-hidden h-48 w-full mb-4 flex items-center justify-center">
+                                <div className="absolute top-3 right-3 bg-black text-white px-3 py-1 rounded-lg text-sm font-bold shadow-sm">
                                     {donor.group}
                                 </div>
-                            </div>
-
-                            <div className="mb-6">
-                                <h3 className="font-bold text-xl text-black mb-1 leading-tight">{donor.name}</h3>
-                                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400">
-                                    {donor.type}
+                                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg flex items-center gap-1.5 shadow-sm">
+                                    <div className={`h-2 w-2 rounded-full ${donor.availability === "High" ? "bg-green-500" :
+                                        donor.availability === "Critical" ? "bg-red-500 animate-pulse" : "bg-gray-400"
+                                        }`} />
+                                    <span className="text-[10px] font-bold text-black uppercase tracking-wider">{donor.availability}</span>
                                 </div>
                             </div>
 
-                            <div className="space-y-3 mb-8 border-t border-dashed border-gray-200 pt-4">
-                                <div className="flex items-start gap-3">
-                                    <Icon icon="mynaui:location" className="text-xl text-gray-400" />
-                                    <span className="text-sm text-gray-600 font-medium">{donor.location}</span>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <div className={`h-2 w-2 rounded-full ${donor.availability === "High" ? "bg-black" :
-                                        donor.availability === "Critical" ? "bg-black animate-pulse" : "bg-gray-400"
-                                        }`}></div>
-                                    <span className="text-sm font-bold text-black">
-                                        {donor.availability} Availability
-                                    </span>
-                                </div>
-                            </div>
+                            <div className="flex-1 flex flex-col">
+                                <div className="space-y-1">
+                                    {/* <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">{donor.type === "Bank" ? "Certified Blood Bank" : "Voluntary Donor"}</p> */}
+                                    <h3 className="text-lg font-bold text-black line-clamp-1 group-hover:underline cursor-pointer">{donor.name}</h3>
 
-                            <button className="w-full py-4 rounded-xl bg-white border border-black text-black font-bold text-sm tracking-wide hover:bg-black hover:text-white transition-all flex items-center justify-center gap-2">
-                                <Icon icon="fluent:call-24-filled" /> {donor.contact}
-                            </button>
+                                    {/* Contact Info under name as requested */}
+                                    <div className="flex items-center gap-2 text-sm font-bold text-gray-600 mt-1">
+                                        <Icon icon="solar:phone-bold" className="text-gray-400" />
+                                        {donor.contact}
+                                    </div>
+
+                                    <div className="flex items-start gap-1.5 text-xs text-gray-400 mt-2">
+                                        <Icon icon="solar:map-point-linear" className="text-sm shrink-0" />
+                                        <span className="line-clamp-1">{donor.location}</span>
+                                    </div>
+                                </div>
+
+                                {/* <div className="mt-auto pt-4 flex items-center justify-between border-t border-gray-50 mt-4">
+                                    <button className="w-full py-3 rounded-full bg-black text-white hover:bg-gray-800 transition-colors flex items-center justify-center gap-2 text-sm font-bold shadow-lg shadow-black/10">
+                                        <Icon icon="solar:letter-linear" className="text-lg" /> Request Blood
+                                    </button>
+                                </div> */}
+                            </div>
                         </div>
                     ))}
                 </div>
             </main>
 
             {/* CTA Section */}
-            <section className="py-24 bg-black text-white text-center">
+            <section className="py-24 bg-white border-t border-gray-100 text-center">
                 <div className="container mx-auto px-4 md:px-6">
-                    <Icon icon="mdi:heart-pulse" className="text-6xl text-white mx-auto mb-6" />
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6">Be a Hero. Save a Life.</h2>
-                    <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+                    <div className="w-20 h-20 mx-auto bg-gray-50 rounded-full flex items-center justify-center mb-8">
+                        <Icon icon="solar:heart-pulse-bold" className="text-4xl text-black" />
+                    </div>
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-black">Be a Hero. Save a Life.</h2>
+                    <p className="text-gray-500 text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
                         Your contribution can make a world of difference. Join our community of donors today and help us create a healthier tomorrow.
                     </p>
-                    <button className="px-10 py-5 bg-white text-black rounded-full font-bold text-lg hover:bg-gray-200 transition-all">
+                    <button className="px-10 py-5 bg-black text-white rounded-full font-bold text-lg hover:bg-gray-800 transition-all shadow-xl shadow-black/10">
                         Register as a Donor
                     </button>
                 </div>

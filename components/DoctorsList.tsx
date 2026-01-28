@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Doctor } from "@/types";
 import GridSwitcher from "./GridSwitcher";
+import { ListSkeleton } from "./Skeleton";
 
 interface DoctorsListProps {
     doctors: Doctor[];
@@ -13,6 +14,7 @@ interface DoctorsListProps {
     title?: string;
     subtitle?: string;
     viewAllLink?: string;
+    loading?: boolean;
 }
 
 export default function DoctorsList({
@@ -20,9 +22,24 @@ export default function DoctorsList({
     showView = true,
     title,
     subtitle,
-    viewAllLink
+    viewAllLink,
+    loading = false
 }: DoctorsListProps) {
     const [columns, setColumns] = useState(4);
+
+    if (loading) {
+        return (
+            <div id="doctors" className="w-full">
+                <div className="flex items-center justify-between w-full pb-4 mb-8 border-b border-gray-100">
+                    <div className="space-y-3">
+                        <div className="h-3 bg-gray-100 rounded-full w-24 animate-pulse" />
+                        <div className="h-8 bg-gray-100 rounded-full w-64 animate-pulse" />
+                    </div>
+                </div>
+                <ListSkeleton key="loading" columns={columns} count={8} />
+            </div>
+        );
+    }
 
     if (!doctors || doctors.length === 0) return null;
 

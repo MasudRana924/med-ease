@@ -5,21 +5,40 @@ import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import { Medicine } from "@/types";
+import { ListSkeleton } from "./Skeleton";
 
 interface MedicineListProps {
     medicines: Medicine[];
     title?: string;
     subtitle?: string;
     viewAllLink?: string;
+    loading?: boolean;
 }
 
 export default function MedicineList({
     medicines,
     title = "Featured Medicines",
     subtitle = "Online Pharmacy",
-    viewAllLink = "/medicine"
+    viewAllLink = "/medicine",
+    loading = false
 }: MedicineListProps) {
     const { addToCart, addToWishlist, isInWishlist } = useCart();
+
+    if (loading) {
+        return (
+            <section className="py-24 bg-white">
+                <div className="container mx-auto px-4 md:px-6">
+                    <div className="flex items-end justify-between mb-12">
+                        <div className="space-y-4">
+                            <div className="h-4 bg-gray-100 rounded-full w-24 animate-pulse" />
+                            <div className="h-10 bg-gray-100 rounded-full w-64 animate-pulse" />
+                        </div>
+                    </div>
+                    <ListSkeleton count={4} />
+                </div>
+            </section>
+        );
+    }
 
     if (!medicines || medicines.length === 0) return null;
 
