@@ -98,13 +98,13 @@ export default function Hero() {
                                     {items.map((item) => (
                                         <div
                                             key={item.id}
-                                            className="relative w-24 h-24 md:w-32 md:h-32 flex items-center justify-center rounded-full  border border-gray-50 "
+                                            className="relative w-16 h-16 md:w-24 md:h-24 flex items-center justify-center rounded-full  border border-gray-50 "
                                         >
                                             {/* If the item is NOT active, show it here */}
                                             {activeId !== item.id && (
                                                 <motion.div
                                                     layoutId={`hero-image-${item.id}`}
-                                                    className="relative w-full h-full rounded-full overflow-hidden border-2 border-white shadow-sm"
+                                                    className="relative w-full h-full rounded-full overflow-hidden  shadow-sm"
                                                     transition={{
                                                         type: "spring",
                                                         stiffness: 350,
@@ -143,7 +143,7 @@ export default function Hero() {
                                         <motion.div
                                             key={item.id}
                                             layoutId={`hero-image-${item.id}`}
-                                            className="relative w-72 h-72 md:w-[500px] md:h-[500px] rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden border-4 border-white"
+                                            className="relative w-72 h-72 md:w-[700px] md:h-[700px] rounded-full bg-white shadow-[0_0_100px_rgba(0,0,0,0.5)] flex items-center justify-center overflow-hidden"
                                             transition={{
                                                 type: "spring",
                                                 stiffness: 350,
