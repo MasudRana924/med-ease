@@ -10,21 +10,21 @@ const items = [
         id: "doctor",
         title: "Expert Doctors",
         subtitle: "Top Specialists",
-        image: "/images/hero/doctor.png",
+        image: "/images/hero/doctor.jpg",
         color: "bg-gray-100",
     },
     {
         id: "medicine",
         title: "Quality Medicines",
         subtitle: "100% Genuine",
-        image: "/images/hero/medicine.png",
+        image: "/images/hero/medicine.jpg",
         color: "bg-gray-100",
     },
     {
         id: "nurse",
         title: "Home Nursing",
         subtitle: "Compassionate Care",
-        image: "/images/hero/nurse.png",
+        image: "/images/hero/nurse.jpg",
         color: "bg-gray-100",
     },
 ];
@@ -104,7 +104,7 @@ export default function Hero() {
                                             {activeId !== item.id && (
                                                 <motion.div
                                                     layoutId={`hero-image-${item.id}`}
-                                                    className="relative w-full h-full rounded-full overflow-hidden"
+                                                    className="relative w-full h-full rounded-full overflow-hidden border-2 border-white shadow-sm"
                                                     transition={{
                                                         type: "spring",
                                                         stiffness: 350,
@@ -115,7 +115,7 @@ export default function Hero() {
                                                         src={item.image}
                                                         alt={item.title}
                                                         fill
-                                                        className="object-contain p-1"
+                                                        className="object-cover"
                                                     />
                                                 </motion.div>
                                             )}
@@ -143,19 +143,19 @@ export default function Hero() {
                                         <motion.div
                                             key={item.id}
                                             layoutId={`hero-image-${item.id}`}
-                                            className="relative w-80 h-80 md:w-[500px] md:h-[500px] rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden"
+                                            className="relative w-72 h-72 md:w-[500px] md:h-[500px] rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden border-4 border-white"
                                             transition={{
                                                 type: "spring",
                                                 stiffness: 350,
                                                 damping: 30,
                                             }}
                                         >
-                                            <div className="relative w-[85%] h-[85%]">
+                                            <div className="relative w-full h-full">
                                                 <Image
                                                     src={item.image}
                                                     alt={item.title}
                                                     fill
-                                                    className="object-contain"
+                                                    className="object-cover"
                                                     priority
                                                 />
                                             </div>
