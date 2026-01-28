@@ -3,11 +3,11 @@
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "@iconify/react";
-import NursesList from "@/components/NursesList";
+import NursesList from "@/components/features/nurses/NursesList";
 import { NurseService } from "@/lib/nurses/actions";
 import { Nurse } from "@/types";
-import PageHero from "@/components/PageHero";
-import { ListSkeleton } from "@/components/Skeleton";
+import PageHero from "@/components/shared/PageHero";
+import { ListSkeleton } from "@/components/shared/Skeleton";
 
 function SearchableNursesList() {
     const router = useRouter();

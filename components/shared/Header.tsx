@@ -6,7 +6,7 @@ import { Icon } from "@iconify/react";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { useState, useEffect } from "react";
-import Button from "./Button";
+import Button from "../Button";
 
 export default function Header() {
     const { user, logout, isAuthenticated } = useAuth();

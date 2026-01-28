@@ -8,9 +8,11 @@ import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import { MedicineService } from "@/lib/medicine/actions";
 import { Medicine } from "@/types";
-import GridSwitcher from "@/components/GridSwitcher";
-import { ListSkeleton } from "@/components/Skeleton";
-import PageHero from "@/components/PageHero";
+import GridSwitcher from "@/components/shared/GridSwitcher";
+import { ListSkeleton } from "@/components/shared/Skeleton";
+import PageHero from "@/components/shared/PageHero";
+import ListingHeader from "@/components/shared/ListingHeader";
+import ItemCard from "@/components/shared/ItemCard";
 
 function SearchableMedicineList() {
     const router = useRouter();
@@ -95,16 +97,15 @@ function SearchableMedicineList() {
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-between w-full border-b border-gray-100 pb-4 mt-20">
-                        <div>
-                            <p className="text-gray-400 text-sm uppercase tracking-widest font-bold">Catalogue</p>
-                            <h2 className="text-2xl font-bold text-black">{medicines.length} Medicines Available</h2>
-                        </div>
+                    <ListingHeader
+                        title={`${medicines.length} Medicines Available`}
+                        subtitle="Catalogue"
+                    >
                         <div className="flex items-center gap-4">
                             <span className="text-sm font-semibold text-gray-400 uppercase tracking-wider hidden sm:block">View:</span>
                             <GridSwitcher currentColumns={columns} onChange={setColumns} />
                         </div>
-                    </div>
+                    </ListingHeader>
                 </div>
 
                 {loading ? (
@@ -112,59 +113,40 @@ function SearchableMedicineList() {
                 ) : medicines.length > 0 ? (
                     <div className={`grid ${getGridColsClass()} gap-8 transition-all duration-500`}>
                         {medicines.map((medicine) => (
-                            <div key={medicine._id} className={`bg-white rounded-2xl p-4 flex flex-col transition-all duration-300 border border-transparent hover:border-black/5 hover:shadow-xl ${columns === 1 ? 'sm:flex-row sm:items-center sm:gap-8' : ''}`}>
-                                <Link href={`/medicine/${medicine._id}`} className={`relative rounded-xl bg-gray-50 overflow-hidden flex items-center justify-center p-6 cursor-pointer ${columns === 1 ? 'h-48 w-full sm:w-64 mb-0' : 'h-56 w-full mb-4'}`}>
+                            <ItemCard
+                                key={medicine._id}
+                                id={medicine._id}
+                                title={medicine.name}
+                                subtitle={medicine.company}
+                                tag={medicine.category}
+                                image={medicine.image?.url}
+                                placeholderIcon="solar:medical-kit-linear"
+                                href={`/medicine/${medicine._id}`}
+                                price={medicine.price}
+                                priceUnit=""
+                                horizontal={columns === 1}
+                                description={medicine.description}
+                                topAction={
                                     <button
                                         onClick={(e) => {
                                             e.preventDefault();
                                             e.stopPropagation();
                                             addToWishlist({ ...medicine, image: medicine.image.url, category: medicine.category || 'Medicine' });
                                         }}
-                                        className={`absolute top-3 right-3 p-2 rounded-full z-10 transition-colors ${isInWishlist(medicine._id) ? 'text-black' : 'text-gray-300 hover:text-black'}`}
+                                        className={`p-2 rounded-full transition-colors bg-white/80 backdrop-blur-sm ${isInWishlist(medicine._id) ? 'text-black' : 'text-gray-300 hover:text-black'}`}
                                     >
                                         <Icon icon={isInWishlist(medicine._id) ? "solar:heart-bold" : "solar:heart-linear"} className="text-xl" />
                                     </button>
-                                    {medicine.image ? (
-                                        <Image
-                                            src={medicine.image.url}
-                                            alt={medicine.name}
-                                            fill
-                                            className="object-contain mix-blend-multiply"
-                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                                        />
-                                    ) : (
-                                        <Icon icon="medical-icon:i-medicines" className="text-6xl text-gray-200" />
-                                    )}
-                                </Link>
-
-                                <div className={`flex flex-col flex-grow ${columns === 1 ? 'justify-center' : ''}`}>
-                                    <div className="space-y-1">
-                                        <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">{medicine.category || "General"}</p>
-                                        <Link href={`/medicine/${medicine._id}`}>
-                                            <h3 className={`font-bold text-black line-clamp-1 hover:underline cursor-pointer ${columns === 1 ? 'text-2xl' : 'text-lg'}`}>{medicine.name}</h3>
-                                        </Link>
-                                        <p className="text-xs text-gray-400 uppercase tracking-wide">{medicine.company}</p>
-                                        {columns === 1 && (
-                                            <p className="text-gray-500 text-sm mt-4 line-clamp-2 max-w-2xl">
-                                                {medicine.description || "High-quality medicine provided by trustable manufacturers to ensure your health and well-being."}
-                                            </p>
-                                        )}
-                                    </div>
-
-                                    <div className={`flex items-center justify-between pt-4 ${columns === 1 ? 'mt-4 border-t border-gray-50' : 'mt-2'}`}>
-                                        <div className="flex items-baseline gap-0.5">
-                                            <span className="text-sm font-medium text-gray-500">$</span>
-                                            <span className={`${columns === 1 ? 'text-3xl' : 'text-2xl'} font-bold text-black`}>{medicine.price}</span>
-                                        </div>
-                                        <button
-                                            onClick={() => addToCart({ ...medicine, image: medicine.image.url, category: medicine.category || 'Medicine' })}
-                                            className={`${columns === 1 ? 'px-8 py-3' : 'px-6 py-2'} rounded-full bg-black text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm font-bold shadow-lg shadow-black/10`}
-                                        >
-                                            <Icon icon="solar:cart-plus-linear" className="text-lg" /> Add to Cart
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                                }
+                                footerAction={
+                                    <button
+                                        onClick={() => addToCart({ ...medicine, image: medicine.image.url, category: medicine.category || 'Medicine' })}
+                                        className={`${columns === 1 ? 'px-8 py-3' : 'px-6 py-2'} rounded-full bg-black text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm font-bold shadow-lg shadow-black/10`}
+                                    >
+                                        <Icon icon="solar:cart-plus-linear" className="text-lg" /> Add to Cart
+                                    </button>
+                                }
+                            />
                         ))}
                     </div>
                 ) : (

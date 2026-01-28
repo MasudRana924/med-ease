@@ -1,6 +1,6 @@
-import DoctorsList from "@/components/DoctorsList";
+import DoctorsList from "@/components/features/doctors/DoctorsList";
 import { DoctorService } from "@/lib/doctors/actions";
-import PageHero from "@/components/PageHero";
+import PageHero from "@/components/shared/PageHero";
 
 export const revalidate = 60;
 

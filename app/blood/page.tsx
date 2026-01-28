@@ -1,11 +1,11 @@
 "use client";
 
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/shared/Header";
+import Footer from "@/components/shared/Footer";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import Button from "@/components/Button";
-import PageHero from "@/components/PageHero";
+import PageHero from "@/components/shared/PageHero";
 
 // Mock Data
 const donors = [

@@ -1,12 +1,14 @@
-import Hero from "@/components/Hero";
-import NursesList from "@/components/NursesList";
-import DoctorsList from "@/components/DoctorsList";
-import MedicineList from "@/components/MedicineList";
+import Hero from "@/components/shared/Hero";
+import NursesList from "@/components/features/nurses/NursesList";
+import DoctorsList from "@/components/features/doctors/DoctorsList";
+import MedicineList from "@/components/features/medicine/MedicineList";
 import { NurseService } from "@/lib/nurses/actions";
 import { DoctorService } from "@/lib/doctors/actions";
 import { MedicineService } from "@/lib/medicine/actions";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
+import { Section } from "@/components/ui";
+import { APP_SERVICES } from "@/constants";
 
 export default async function Home() {
   const nursesData = NurseService.getFeatured();
@@ -14,7 +16,7 @@ export default async function Home() {
   const medicinesData = MedicineService.getFeatured();
 
   const [nurses, doctors, medicines] = await Promise.all([nursesData, doctorsData, medicinesData]);
-  console.log("hiiii server")
+
   return (
     <>
       <Hero />
@@ -41,33 +43,27 @@ export default async function Home() {
       />
 
       {/* Medicine Services at a Glance */}
-      <section className="py-20 bg-white ">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-black mb-4 tracking-tight">Medicine Services at a Glance</h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">
-              Ensuring availability, timely delivery, and affordable services for our customers
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            {[
-              { icon: "solar:medical-kit-linear", title: "Medicine Available", value: "10k+", desc: "Medicines and healthcare products" },
-              { icon: "solar:delivery-linear", title: "Delivery Time", value: "24-48 hrs", desc: "Fast and reliable delivery" },
-              { icon: "solar:dollar-minimalistic-linear", title: "Service Charge", value: "Free", desc: "No hidden charges on purchases" }
-            ].map((item, idx) => (
-              <div key={idx} className="p-8 bg-white rounded-3xl border border-black/5 hover:border-black/20 transition-colors">
-                <div className="w-16 h-16 mx-auto bg-gray-50 rounded-full flex items-center justify-center mb-6 text-3xl text-black">
-                  <Icon icon={item.icon} />
-                </div>
-                <h3 className="text-xl font-bold text-black mb-2">{item.title}</h3>
-                <div className="text-4xl font-extrabold text-black mb-2">{item.value}</div>
-                <p className="text-gray-500">{item.desc}</p>
-              </div>
-            ))}
-          </div>
+      <Section className="bg-white border-b border-gray-100">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold text-black mb-4 tracking-tight">Medicine Services at a Glance</h2>
+          <p className="text-gray-500 max-w-2xl mx-auto font-medium">
+            Ensuring availability, timely delivery, and affordable services for our customers
+          </p>
         </div>
-      </section>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          {APP_SERVICES.map((item, idx) => (
+            <div key={idx} className="p-8 bg-white rounded-3xl border border-black/5 hover:border-black/20 transition-all duration-300">
+              <div className="w-16 h-16 mx-auto bg-gray-50 rounded-full flex items-center justify-center mb-6 text-3xl text-black">
+                <Icon icon={item.icon} />
+              </div>
+              <h3 className="text-xl font-bold text-black mb-2">{item.title}</h3>
+              <div className="text-4xl font-extrabold text-black mb-2">{item.value}</div>
+              <p className="text-gray-500 font-medium">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
 
       {/* Why Choose Our Pharmacy */}
       <section className="py-20 bg-white">

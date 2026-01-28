@@ -5,8 +5,8 @@ import { Icon } from "@iconify/react";
 import Link from "next/link";
 import Image from "next/image";
 import { Nurse } from "@/types";
-import GridSwitcher from "./GridSwitcher";
-import { ListSkeleton } from "./Skeleton";
+import GridSwitcher from "./shared/GridSwitcher";
+import { ListSkeleton } from "./shared/Skeleton";
 
 interface NursesListProps {
     nurses: Nurse[];

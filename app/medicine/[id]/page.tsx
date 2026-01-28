@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/shared/Header";
+import Footer from "@/components/shared/Footer";
 import { MedicineService } from "@/lib/medicine/actions";
 import MedicineActions from "./MedicineActions";
 

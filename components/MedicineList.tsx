@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import { Medicine } from "@/types";
-import { ListSkeleton } from "./Skeleton";
+import { ListSkeleton } from "./shared/Skeleton";
 
 interface MedicineListProps {
     medicines: Medicine[];

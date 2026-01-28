@@ -1,6 +1,6 @@
 "use client";
 
-import { ListSkeleton } from "@/components/Skeleton";
+import { ListSkeleton } from "@/components/shared/Skeleton";
 
 export default function Loading() {
     return (

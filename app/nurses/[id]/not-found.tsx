@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Icon } from "@iconify/react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/shared/Header";
+import Footer from "@/components/shared/Footer";
 
 export default function NotFound() {
     return (
