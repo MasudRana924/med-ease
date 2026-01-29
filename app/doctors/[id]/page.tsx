@@ -1,6 +1,7 @@
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import Button from "@/components/Button";
+import BackButton from "@/components/shared/BackButton";
 import Rating from "@/components/ui/Rating";
 import ReviewForm from "@/components/ReviewForm";
 import { DoctorService } from "@/lib/doctors/actions";
@@ -26,16 +27,7 @@ export default async function DoctorDetailsPage({ params }: DoctorDetailsPagePro
     return (
         <div className="flex flex-col min-h-screen">
             <main className="flex-1 py-8">
-                {/* Back Button */}
-                <div className="w-full lg:w-9/12 mx-auto px-4 md:px-6 mb-6">
-                    <Link
-                        href="/doctors"
-                        className="inline-flex items-center gap-2 text-zinc-500 hover:text-black transition-colors group px-4 py-2 "
-                    >
-                        <Icon icon="solar:alt-arrow-left-linear" className="text-xl group-hover:-translate-x-1 transition-transform" />
-                        <span className="font-medium">Back</span>
-                    </Link>
-                </div>
+                <BackButton href="/doctors" className="lg:w-9/12 mx-auto px-4 md:px-6" />
 
                 <div className="w-full lg:w-9/12 mx-auto px-4 md:px-6 mb-16">
                     <div className="p-4 overflow-hidden">

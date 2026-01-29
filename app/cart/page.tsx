@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import Link from "next/link";
 import Image from "next/image";
 import Button from "@/components/Button";
+import BackButton from "@/components/shared/BackButton";
 
 export default function CartPage() {
     const { cart, removeFromCart, updateQuantity } = useCart();
@@ -13,15 +14,7 @@ export default function CartPage() {
 
     return (
         <div className="container mx-auto px-4 py-8 md:py-16 max-w-6xl">
-            <div className="w-full mb-6">
-                <Link
-                    href="/"
-                    className="inline-flex items-center gap-2 text-zinc-500 hover:text-black transition-colors group px-4 py-2 "
-                >
-                    <Icon icon="solar:alt-arrow-left-linear" className="text-xl group-hover:-translate-x-1 transition-transform" />
-                    <span className="font-medium">Back</span>
-                </Link>
-            </div>
+            <BackButton href="/" />
             <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-100 pb-6">
                 <div>
                     <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2">Shopping Cart</h1>
@@ -89,7 +82,7 @@ export default function CartPage() {
                                                 <Icon icon="lucide:minus" className="text-sm" />
                                             </button>
                                             <div className="w-12 text-center">
-                                                <span className="font-mono font-bold text-lg leading-none">
+                                                <span className="font-sans font-bold text-lg leading-none">
                                                     {item.quantity || 1}
                                                 </span>
                                             </div>
@@ -103,7 +96,7 @@ export default function CartPage() {
                                         </div>
                                         <div className="text-right">
                                             <p className="text-xs text-gray-400 uppercase font-bold tracking-widest mb-1">Subtotal</p>
-                                            <span className="font-mono text-2xl font-bold">${(item.price * (item.quantity || 1)).toFixed(2)}</span>
+                                            <span className="font-sans text-2xl font-bold">${(item.price * (item.quantity || 1)).toFixed(2)}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -119,15 +112,15 @@ export default function CartPage() {
                             <div className="space-y-4 mb-8 text-sm">
                                 <div className="flex justify-between text-gray-600">
                                     <span>Subtotal</span>
-                                    <span className="font-mono">${total.toFixed(2)}</span>
+                                    <span className="font-sans">${total.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-gray-600">
                                     <span>Tax (5%)</span>
-                                    <span className="font-mono">${(total * 0.05).toFixed(2)}</span>
+                                    <span className="font-sans">${(total * 0.05).toFixed(2)}</span>
                                 </div>
                                 <div className="pt-4 border-t border-gray-200 flex justify-between text-lg font-bold">
                                     <span>Total</span>
-                                    <span className="font-mono">${(total * 1.05).toFixed(2)}</span>
+                                    <span className="font-sans">${(total * 1.05).toFixed(2)}</span>
                                 </div>
                             </div>
 

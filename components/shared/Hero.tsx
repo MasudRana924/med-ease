@@ -60,12 +60,12 @@ export default function Hero() {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.6 }}
                                 >
-                                    <span className="inline-block py-1.5 px-4 rounded-full border border-black text-black font-semibold text-sm mb-4 tracking-wide uppercase">
+                                    <span className="inline-block py-1.5 px-4 rounded-full border border-gray-50 bg-gray-200 text-black font-semibold text-sm mb-4 tracking-wide uppercase">
                                         #1 Healthcare Platform
                                     </span>
                                     <h1 className="text-4xl md:text-6xl font-bold text-black leading-tight">
                                         Your Health, <br />
-                                        <span className="text-gray-500">Our Priority</span>
+                                        <span className="text-black">Our Priority</span>
                                     </h1>
                                     <p className="text-lg text-gray-600 max-w-lg pt-4 leading-relaxed font-medium">
                                         Experience the future of healthcare with our integrated platform.
@@ -76,13 +76,13 @@ export default function Hero() {
                                 <div className="flex gap-4 pt-4">
                                     <Link
                                         href="/doctors"
-                                        className="px-8 py-3 bg-black text-white rounded-full font-bold uppercase tracking-wider hover:bg-gray-800 transition transform hover:scale-105"
+                                        className="px-8 py-3 bg-black text-white  font-bold uppercase tracking-wider hover:bg-gray-800 transition transform hover:scale-105"
                                     >
                                         Book Appointment
                                     </Link>
                                     <Link
                                         href="/medicine"
-                                        className="px-8 py-3 bg-white border-2 border-black text-black rounded-full font-bold uppercase tracking-wider hover:bg-gray-100 transition"
+                                        className="px-8 py-3 bg-white border border-black text-black  font-bold uppercase tracking-wider hover:bg-gray-100 transition"
                                     >
                                         Order Medicine
                                     </Link>

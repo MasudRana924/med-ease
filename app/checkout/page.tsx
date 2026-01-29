@@ -6,6 +6,8 @@ import { useCart } from "@/context/CartContext";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 
+import BackButton from "@/components/shared/BackButton";
+
 import { useState, useEffect } from "react";
 
 export default function CheckoutPage() {
@@ -36,15 +38,7 @@ export default function CheckoutPage() {
         <AuthGuard>
             <div className="flex flex-col min-h-screen bg-white text-black">
                 <main className="flex-1 container mx-auto px-4 py-8 md:py-16 max-w-6xl">
-                    <div className="w-full mb-6">
-                        <Link
-                            href="/cart"
-                            className="inline-flex items-center gap-2 text-zinc-500 hover:text-black transition-colors group px-4 py-2 "
-                        >
-                            <Icon icon="solar:alt-arrow-left-linear" className="text-xl group-hover:-translate-x-1 transition-transform" />
-                            <span className="font-medium">Back</span>
-                        </Link>
-                    </div>
+                    <BackButton href="/cart" />
                     <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-100 pb-6">
                         <div>
                             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-2">Checkout</h1>
@@ -137,7 +131,7 @@ export default function CheckoutPage() {
                                                 <p className="font-bold">{item.name}</p>
                                                 <p className="text-gray-500">Qty: {item.quantity || 1}</p>
                                             </div>
-                                            <span className="font-mono font-bold">${(item.price * (item.quantity || 1)).toFixed(2)}</span>
+                                            <span className="font-sans font-bold">${(item.price * (item.quantity || 1)).toFixed(2)}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -145,15 +139,15 @@ export default function CheckoutPage() {
                                 <div className="space-y-4 pt-6 border-t border-gray-200">
                                     <div className="flex justify-between text-gray-600 text-sm">
                                         <span>Subtotal</span>
-                                        <span className="font-mono">${total.toFixed(2)}</span>
+                                        <span className="font-sans">${total.toFixed(2)}</span>
                                     </div>
                                     <div className="flex justify-between text-gray-600 text-sm">
                                         <span>Tax (5%)</span>
-                                        <span className="font-mono">${(total * 0.05).toFixed(2)}</span>
+                                        <span className="font-sans">${(total * 0.05).toFixed(2)}</span>
                                     </div>
                                     <div className="pt-4 flex justify-between text-xl font-bold">
                                         <span>Total</span>
-                                        <span className="font-mono">${(total * 1.05).toFixed(2)}</span>
+                                        <span className="font-sans">${(total * 1.05).toFixed(2)}</span>
                                     </div>
                                 </div>
 

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
+import BackButton from "@/components/shared/BackButton";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer";
 import { MedicineService } from "@/lib/medicine/actions";
@@ -26,16 +27,7 @@ export default async function MedicineDetailsPage({ params }: MedicineDetailsPag
         <div className="flex flex-col min-h-screen ">
             <main className="flex-1 py-8 md:py-12">
                 <div className="container mx-auto px-4 md:px-6 max-w-7xl">
-                    {/* Breadcrumb & Back */}
-                    <div className="mb-8">
-                        <Link
-                            href="/medicine"
-                            className="inline-flex items-center gap-2 text-zinc-500 hover:text-black transition-colors group px-4 py-2"
-                        >
-                            <Icon icon="solar:alt-arrow-left-linear" className="text-xl group-hover:-translate-x-1 transition-transform" />
-                            <span className="font-medium">Back to Medicines</span>
-                        </Link>
-                    </div>
+                    <BackButton href="/medicine" label="Back to Medicines" />
 
                     <div className="p-6 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
                         {/* Left Column: Image */}

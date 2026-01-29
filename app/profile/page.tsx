@@ -6,6 +6,7 @@ import AuthGuard from "@/components/guards/AuthGuard";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import Button from "@/components/Button";
+import BackButton from "@/components/shared/BackButton";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -93,7 +94,7 @@ export default function ProfilePage() {
                                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                                     <div>
                                         <div className="flex items-center gap-3 mb-1">
-                                            <span className="font-mono font-bold text-lg">#ORD-2024-00{order}</span>
+                                            <span className="font-sans font-bold text-lg">#ORD-2024-00{order}</span>
                                             <span className={`px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${order === 1 ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'}`}>
                                                 {order === 1 ? 'Pending' : 'Delivered'}
                                             </span>
@@ -179,15 +180,7 @@ export default function ProfilePage() {
     return (
         <AuthGuard>
             <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 max-w-7xl">
-                <div className="w-full mb-6">
-                    <Link
-                        href="/"
-                        className="inline-flex items-center gap-2 text-zinc-500 hover:text-black transition-colors group px-4 py-2 "
-                    >
-                        <Icon icon="solar:alt-arrow-left-linear" className="text-xl group-hover:-translate-x-1 transition-transform" />
-                        <span className="font-medium">Back</span>
-                    </Link>
-                </div>
+                <BackButton href="/" />
 
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                     {/* Sidebar */}
